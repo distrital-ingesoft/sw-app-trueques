@@ -1,0 +1,17 @@
+version: '3.3'
+
+# servicios a ejecutar
+services:
+    # MySQL con nombre `tareas-db`
+    db:
+        image: mysql:8.0.31
+        container_name: tareas-db
+        environment:
+            - MYSQL_DATABASE=swapp
+            - MYSQL_USER=cunigarro
+            - MYSQL_PASSWORD=1113514597
+            - MYSQL_ROOT_PASSWORD=1113514597
+        ports:
+            - '3306:3306'
+        expose:
+            - '3306'
