@@ -1,7 +1,5 @@
 package com.ingseoft.swapp.Model;
 
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,11 +16,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Trocador extends Usuario {
+public class ElementoDeseado {
     @Id
     @GeneratedValue
     Integer id;
-    String ciudad;
-    String direccion;
-    String preferencia;
+    String nombre;
 }

@@ -3,6 +3,8 @@ package com.ingseoft.swapp.Model;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -17,7 +19,12 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class Trueque {
-    String Estado;
-    Date Fecha;
-    Double PrecioLogistica;
+    @Id
+    @GeneratedValue
+    String estado;
+    Date fecha;
+    Double precioLogistica;
+    ElementoDeseado elementoDeseado;
+    ElementoTrueque elementoTrueque;
+    Trocador solicitante;
 }
