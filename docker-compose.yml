@@ -40,4 +40,3 @@ services:
             - 8081:80
         environment:
             - PMA_HOST=swapp-db
-

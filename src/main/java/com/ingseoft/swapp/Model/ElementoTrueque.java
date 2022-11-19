@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,13 +24,24 @@ public class ElementoTrueque {
     @Id
     @GeneratedValue
     Integer id;
+
     String description;
+
     Boolean disponible;
+
     String enlaceImagen;
+
     String estadoElemento;
+
     String nombre;
+
     Double precio;
+
+    @OneToMany
     List<ElementoDeseado> elementosDeseados = new ArrayList<>();
-    Categoria categoria;
+
+    @OneToMany
+    List<ElementoDeseado> categoria;
+
     Trocador trocador;
 }

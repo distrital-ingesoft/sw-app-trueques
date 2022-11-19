@@ -22,7 +22,10 @@ public class Trocador extends Usuario {
     @Id
     @GeneratedValue
     Integer id;
+
     String ciudad;
+
     String direccion;
+
     String preferencia;
 }
