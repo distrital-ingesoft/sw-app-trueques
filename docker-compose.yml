@@ -18,14 +18,14 @@ services:
         expose:
             - '3306'
         # opciones de disco
-        volumes:
-          # bind de la carpeta del proyecto a una carpeta del contenedor
-          - type:  bind
-            source: ./mysql-initdb
-            target: /docker-entrypoint-initdb.d
-          - type: bind
-            source: ./scripts
-            target: /scripts
+        # volumes:
+        #   # bind de la carpeta del proyecto a una carpeta del contenedor
+        #   - type:  bind
+        #     source: ./mysql-initdb
+        #     target: /docker-entrypoint-initdb.d
+        #   - type: bind
+        #     source: ./scripts
+        #     target: /scripts
         # swapp-db es OK cuando ejecutando mysqladmin dice OK
         healthcheck:
             test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
