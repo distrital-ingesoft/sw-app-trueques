@@ -17,7 +17,7 @@ class SwAppApplicationTests {
 	// fixture
 
 	@BeforeAll
-	void antesDeTodasLasPruebas() {
+	static void antesDeTodasLasPruebas() {
 		// crea el contenedor para la prueba
 	}
 
@@ -51,7 +51,7 @@ class SwAppApplicationTests {
 	}
 
 	@AfterAll
-	void luegoDeTodasLasPruebas() {
+	static void luegoDeTodasLasPruebas() {
 		// apago el contenedor
 	}
 
