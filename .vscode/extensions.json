@@ -1,0 +1,17 @@
+{
+	// Extensiones para este repositorio
+	// https://go.microsoft.com/fwlink/?LinkId=827846 
+
+	// == SI quiero
+	// Java Extension Pack
+	// Spring Extension Pack
+	"recommendations": [
+		"vscjava.vscode-java-pack",
+		"pivotal.vscode-boot-dev-pack"
+	],
+
+	// == NO quiero
+	"unwantedRecommendations": [
+		
+	]
+}
