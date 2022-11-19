@@ -18,7 +18,8 @@
 
 	// Configure tool-specific properties.
 	"customizations": {
-		// Configure properties specific to VS Code.
+		
+		// Visual Studio Code
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
 			"settings": {
@@ -26,9 +27,13 @@
 
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"vscjava.vscode-java-pack"
+				"vscjava.vscode-java-pack",
+				"pivotal.vscode-boot-dev-pack"
 			]
-		}
+		},
+
+		// Codespaces
+		"codespaces": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

@@ -3,41 +3,63 @@ version: '3.3'
 # servicios a ejecutar
 services:
     swapp-db:
+        # Imagen
         image: mysql:8.0.31
         container_name: swapp-db
         environment:
             - MYSQL_DATABASE=swapp
             - MYSQL_USER=cunigarro
-            - MYSQL_PASSWORD=1113514597
-            - MYSQL_ROOT_PASSWORD=1113514597
+            - MYSQL_PASSWORD=secret
+            - MYSQL_ROOT_PASSWORD=secret
+        # puertos a exponer al host -- al edito
         ports:
             - '3306:3306'
+        # puertos a exponer a los otros conectores
         expose:
             - '3306'
+        # opciones de disco
+        # volumes:
+        #   # bind de la carpeta del proyecto a una carpeta del contenedor
+        #   - type:  bind
+        #     source: ./mysql-initdb
+        #     target: /docker-entrypoint-initdb.d
+        #   - type: bind
+        #     source: ./scripts
+        #     target: /scripts
+        # swapp-db es OK cuando ejecutando mysqladmin dice OK
         healthcheck:
             test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
             interval: 5s
             timeout: 5s
             retries: 20
 
+    # La aplicación -- a correr como un contenedor
+    # no va a correr con la cadena de conexión de -- jdbc:mysql://localhost/ejemplo
+    # necesita conectarse a la máquina del contenedor -- jdbc:mysql://swapp-db/ejemplo
     swapp-app:
         image: swapp:latest
         container_name: swapp-app
+        # use el Dockerfile del proyecto
         build: .
         ports:
             - '8080:8080'
         expose:
             - '8080'
+        # solo inicie este contenedor cuando swapp-db este OK
         depends_on:
             swapp-db:
                 condition: service_healthy
 
+    # phpMyAdmin
     phpmyadmin:
         image: phpmyadmin
         container_name: phpmyadmin
         restart: always
+        # expongo el puerto 80 dentro del contenedor
+        # en el puerto 8081 del IDE
         ports:
             - 8081:80
+        # no permite que se conecte a otra base de datos
+        # solo se conecta al servidor swapp-db
         environment:
             - PMA_HOST=swapp-db
-

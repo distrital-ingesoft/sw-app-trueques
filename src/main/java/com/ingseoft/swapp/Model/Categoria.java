@@ -5,6 +5,7 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,5 +23,9 @@ public class Categoria {
     @Id
     @GeneratedValue
     Integer id;
+
     String nombre;
+
+    @ManyToOne
+    ElementoTrueque elementoTrueque;
 }
