@@ -5,6 +5,7 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,7 +25,12 @@ public class Trueque {
     String estado;
     Date fecha;
     Double precioLogistica;
+
+    @OneToOne
     ElementoDeseado elementoDeseado;
-    ElementoTrueque elementoTrueque;
+
+    @OneToMany
+    List<ElementoTrueque> elementoTrueque;
+
     Trocador solicitante;
 }
