@@ -1,24 +1,25 @@
 package com.ingseoft.swapp.Model;
-
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import javax.persistence.ForeignKey;
 
+@Table(name = "trueques")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,24 +27,35 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class Trueque {
-    
     @Id
-    @GeneratedValue
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-    String estado;
+    @Column(name = "estado",length = 100)
+    private String estado;
 
-    @Temporal(TemporalType.DATE)
-    Date fecha;
-    
-    Double precioLogistica;
+    @Column(name= "fecha_inicio")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaInicio;
 
-    @OneToOne
-    ElementoDeseado elementoDeseado;
+    @Column(name= "fecha_final")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaFinal;
 
-    @OneToMany
-    List<ElementoTrueque> elementoTrueque = new ArrayList<>();
+    @Column(name = "precio_logistica",length = 18)
+    private Double precioLogistica;
 
-    @ManyToOne 
-    Trocador solicitante;
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = Usuario.class)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_usuario"), nullable = true)
+    private Usuario solicitante;
+
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = ElementoDeseado.class)
+    @JoinColumn(name = "elemento_deseado_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_elemento_deseado"), nullable = true)
+    private ElementoDeseado elementoDeseado;
+
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = ElementoTrueque.class)
+    @JoinColumn(name = "elemento_trueque_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_elemento_trueque"), nullable = true)
+    private ElementoTrueque elementoTrueque;
+
 }
