@@ -19,7 +19,7 @@ public class ServicioTrueque {
         return this.repository.findAll();
     }
 
-    public Trueque addTrueque (Trueque newTrueque) throws Exception{
+    /* public Trueque addTrueque (Trueque newTrueque) throws Exception{
         List<Trueque> list1 = this.repository.findByIdTrueque(newTrueque.getId());
         boolean status1 = list1.isEmpty();
         if(status1 == false){
@@ -49,5 +49,5 @@ public class ServicioTrueque {
         }else{
             this.repository.deleteById(id);
         }
-    }
+    } */
 }
