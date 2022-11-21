@@ -42,7 +42,7 @@ public class ElementoTrueque {
     List<ElementoDeseado> elementosDeseados = new ArrayList<>();
 
     @OneToMany
-    List<ElementoDeseado> categoria;
+    List<Categoria> categorias;
 
     @ManyToOne
     Trocador trocador;

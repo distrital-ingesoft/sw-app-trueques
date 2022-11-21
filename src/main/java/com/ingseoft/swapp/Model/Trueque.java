@@ -26,7 +26,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class Trueque {
-    
+
     @Id
     @GeneratedValue
     Long id;
@@ -35,15 +35,15 @@ public class Trueque {
 
     @Temporal(TemporalType.DATE)
     Date fecha;
-    
+
     Double precioLogistica;
 
     @OneToOne
     ElementoDeseado elementoDeseado;
 
     @OneToMany
-    List<ElementoTrueque> elementoTrueque = new ArrayList<>();
+    List<ElementoTrueque> elementosTrueque = new ArrayList<>();
 
-    @ManyToOne 
+    @ManyToOne
     Trocador solicitante;
 }
