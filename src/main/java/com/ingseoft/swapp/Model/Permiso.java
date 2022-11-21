@@ -24,13 +24,13 @@ public class Permiso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    Integer id;
 
     @Column(name = "nombre",length = 100)
-    private String nombre;
+    String nombre;
 
     @Column(name = "descripcion", length = 250)
-    private String descripcion;
+    String descripcion;
 
 
 }

@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,11 +38,13 @@ public class Trueque {
     private String estado;
 
     @Column(name= "fecha_inicio")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date fechaInicio;
 
     @Column(name= "fecha_final")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date fechaFinal;
 
     @Column(name = "precio_logistica",length = 18)

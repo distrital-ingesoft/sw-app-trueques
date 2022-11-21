@@ -41,13 +41,13 @@ public class Usuario {
     String correo;
 
     @Column(name = "celular")
-    Integer celular;
+    Long celular;
 
     @Column(name = "ciudad",length = 100)
     String contrasenia;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
-    @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Usuarios_Roles"), nullable = false)
+    @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Usuarios_Roles"), nullable = true)
     Rol rol;
 
     @Column(name = "estado")

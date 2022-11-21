@@ -44,7 +44,7 @@ public class Rol {
 
 
     @OneToMany(fetch = FetchType.EAGER, targetEntity = Permiso.class)
-    @JoinColumn(name = "permiso_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Roles_Permisos"), nullable = false)
+    @JoinColumn(name = "permiso_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Roles_Permisos"), nullable = true)
     private List<Permiso> permisos;
 
 
