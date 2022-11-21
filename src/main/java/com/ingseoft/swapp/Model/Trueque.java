@@ -29,7 +29,7 @@ public class Trueque {
 
     @Id
     @GeneratedValue
-    Long id;
+    Integer id;
 
     String estado;
 
