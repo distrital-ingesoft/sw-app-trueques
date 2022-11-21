@@ -33,6 +33,10 @@ services:
             timeout: 5s
             retries: 20
 
+    # La aplicación -- a correr como un contenedor
+    # no va a correr con la cadena de conexión de -- jdbc:mysql://localhost/ejemplo
+    # necesita conectarse a la máquina del contenedor -- jdbc:mysql://swapp-db/ejemplo
+
     # phpMyAdmin
     phpmyadmin:
         image: phpmyadmin
