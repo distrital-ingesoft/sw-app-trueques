@@ -36,6 +36,19 @@ services:
     # La aplicación -- a correr como un contenedor
     # no va a correr con la cadena de conexión de -- jdbc:mysql://localhost/ejemplo
     # necesita conectarse a la máquina del contenedor -- jdbc:mysql://swapp-db/ejemplo
+    swapp-app:
+        image: swapp:latest
+        container_name: swapp-app
+        # use el Dockerfile del proyecto
+        build: .
+        ports:
+            - '8080:8080'
+        expose:
+            - '8080'
+        # solo inicie este contenedor cuando swapp-db este OK
+        depends_on:
+            swapp-db:
+                condition: service_healthy
 
     # phpMyAdmin
     phpmyadmin:
