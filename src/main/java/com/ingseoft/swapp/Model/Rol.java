@@ -9,12 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.ForeignKey;
 
@@ -47,7 +44,7 @@ public class Rol {
     @Column(name = "activo")
     private Boolean activo;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Permiso.class)
-    @JoinTable(name = "rol_permiso", joinColumns = @JoinColumn(name = "rolId"), inverseJoinColumns = @JoinColumn(name = "permisoId"))
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Permiso.class)
+    @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Roles_Permisos"), nullable = true)
     private List<Permiso> permisos;
 }

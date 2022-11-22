@@ -1,6 +1,5 @@
 package com.ingseoft.swapp.Controller;
 
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ingseoft.swapp.Dto.CrearRolDto;
 import com.ingseoft.swapp.Model.Rol;
 import com.ingseoft.swapp.Services.RolService;
 
@@ -41,8 +39,8 @@ public class RolController {
 
     @PostMapping("/nuevoRol")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarPermisos(@RequestBody CrearRolDto nuevoRol) throws Exception {
-        Rol nuevo = this.servicio.crearRolDto(nuevoRol);
+    public String agregarPermisos(@RequestBody Rol nuevoRol) throws Exception {
+        Rol nuevo = this.servicio.agregarRol(nuevoRol);
         return nuevo.getNombre();
     }
 
