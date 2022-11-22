@@ -9,8 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.ForeignKey;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +32,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class Rol {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -35,21 +40,14 @@ public class Rol {
 
     @Column(name = "nombre", length = 100)
     private String nombre;
-    
+
     @Column(name = "descripcion", length = 250)
     private String descripcion;
 
     @Column(name = "activo")
     private Boolean activo;
 
-
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Permiso.class)
-    @JoinColumn(name = "permiso_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Roles_Permisos"), nullable = true)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Permiso.class)
+    @JoinTable(name = "rol_permiso", joinColumns = @JoinColumn(name = "rolId"), inverseJoinColumns = @JoinColumn(name = "permisoId"))
     private List<Permiso> permisos;
-
-
-
-
-
-
 }
