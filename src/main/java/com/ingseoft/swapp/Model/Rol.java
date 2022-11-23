@@ -1,24 +1,17 @@
 package com.ingseoft.swapp.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.ForeignKey;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -49,6 +42,12 @@ public class Rol {
     @Column(name = "activo")
     private Boolean activo;
 
-    @OneToMany(mappedBy = "rol")
+    @JsonIgnore
+    @OneToMany(mappedBy = "rol", cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE,
+        CascadeType.DETACH,
+        CascadeType.REFRESH
+    })
     private List<Permiso> permisos;
 }

@@ -1,5 +1,6 @@
 package com.ingseoft.swapp.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,12 @@ public class Permiso {
     @Column(name = "descripcion", length = 250)
     String descripcion;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE,
+        CascadeType.DETACH,
+        CascadeType.REFRESH
+    })
     @JoinColumn(name="rol_id")
     Rol rol;
 }
