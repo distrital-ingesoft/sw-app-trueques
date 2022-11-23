@@ -1,7 +1,9 @@
 package com.ingseoft.swapp.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +49,6 @@ public class Rol {
     @Column(name = "activo")
     private Boolean activo;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Permiso.class)
-    @JoinTable(name = "rol_permiso", joinColumns = @JoinColumn(name = "rolId"), inverseJoinColumns = @JoinColumn(name = "permisoId"))
+    @OneToMany(mappedBy = "rol")
     private List<Permiso> permisos;
 }

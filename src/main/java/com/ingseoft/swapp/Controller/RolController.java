@@ -41,8 +41,8 @@ public class RolController {
 
     @PostMapping("/nuevoRol")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarPermisos(@RequestBody CrearRolDto nuevoRol) throws Exception {
-        Rol nuevo = this.servicio.crearRolDto(nuevoRol);
+    public String agregarPermisos(@RequestBody Rol nuevoRol) throws Exception {
+        Rol nuevo = this.servicio.agregarRol(nuevoRol);
         return nuevo.getNombre();
     }
 
