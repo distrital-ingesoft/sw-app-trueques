@@ -30,7 +30,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     Integer id;
-    
+
     @Column(name = "nombre_completo", length = 200)
     String nombreCompleto;
 
@@ -44,12 +44,15 @@ public class Usuario {
     Long celular;
 
     @Column(name = "ciudad",length = 100)
+    String ciudad;
+
+    @Column(name = "contrasenia",length = 100)
     String contrasenia;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
     @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Usuarios_Roles"), nullable = true)
     Rol rol;
 
-    @Column(name = "estado")
-    Boolean estado;
+    @Column(name = "activo")
+    Boolean activo;
 }

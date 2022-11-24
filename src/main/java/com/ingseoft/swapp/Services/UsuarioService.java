@@ -1,5 +1,7 @@
 package com.ingseoft.swapp.Services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.ingseoft.swapp.Model.Usuario;
@@ -34,19 +36,26 @@ public class UsuarioService {
     public Iterable<Usuario> obtenerTodosLosUsuarios() {
         return this.repositorio.findAll();
     }
-    
-    // CU1
-    // 1. actor ingresa datos del trocador
-    // 2. sistema revisa que no existe otro trocador con el mismo nombre
-    // 3. sistema almacena el trocador
+
+    // CU001
+    // 1. Inicia Sesión
+    // 2. Ingresa correo
     public Usuario agregarUsuario (Usuario nuevoUsuario) throws Exception {
-
         // 2. sistema revisa que no existe otro trocador con el mismo nombre
-        if (nuevoUsuario.getCorreo().equals("ejemplo")) {
-            throw new Exception("Correo ya existe!!");
-        
-        } else {
+        List<Usuario> usuariosMismoCorreo = this.repositorio.findByCorreo(nuevoUsuario.getCorreo());
 
+        List<Usuario> usuariosMismoCelular = this.repositorio.findByCelular(nuevoUsuario.getCelular());
+
+        List<Usuario> usuariosMismoDocumento = this.repositorio.findByDocumentoIdentificacion(nuevoUsuario.getDocumentoIdentificacion());
+
+        // 2. Verifica que no exista un correo similar
+        if (!usuariosMismoCorreo.isEmpty()) {
+            throw new Exception("Ya existe un usuario con el mismo correo.");
+        } else if (!usuariosMismoCelular.isEmpty()) {
+            throw new Exception("Ya existe un usuario con el mismo celular.");
+        } else if (!usuariosMismoDocumento.isEmpty()) {
+            throw new Exception("Ya existe un usuario con el mismo documento.");
+        } else {
             // 3. sistema almacena el trocador
             return this.repositorio.save(nuevoUsuario);
         }

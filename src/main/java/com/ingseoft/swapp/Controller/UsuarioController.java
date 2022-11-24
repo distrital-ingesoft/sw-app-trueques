@@ -41,13 +41,13 @@ public class UsuarioController {
 
     // == Operaciones REST
 
-    @GetMapping("/Usuarios")
+    @GetMapping("/usuarios")
     public Iterable<Usuario> leerTodosLosUsuario() {
         return this.servicio.obtenerTodosLosUsuarios();
 
     }
 
-    @PostMapping("/nuevoUsuario")
+    @PostMapping("/nuevo-usuario")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String agregarUsuario(@RequestBody Usuario nuevoUsuario) throws Exception {
         Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
