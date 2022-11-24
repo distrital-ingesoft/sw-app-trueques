@@ -30,13 +30,13 @@ public class CategoriaController {
 
     // == Operaciones REST
 
-    @GetMapping("/Categorias")
+    @GetMapping("/categorias")
     public Iterable<Categoria> leerTodosLasCategorias() {
         return this.servicio.obtenerTodosLasCategorias();
 
     }
 
-    @PostMapping("/nuevaCategoria")
+    @PostMapping("/nueva-categoria")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String agregarPermisos(@RequestBody Categoria nuevaCategoria) throws Exception {
         Categoria nuevo = this.servicio.agregarCategoria(nuevaCategoria);

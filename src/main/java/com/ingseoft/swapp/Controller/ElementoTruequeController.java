@@ -30,17 +30,15 @@ public class ElementoTruequeController {
 
     // == Operaciones REST
 
-    @GetMapping("/ElementosTrueque")
+    @GetMapping("/elementos-trueque")
     public Iterable<ElementoTrueque> leerTodosLosElementoTrueque() {
         return this.servicio.obtenerTodosLosElementoTrueque();
-
     }
 
-    @PostMapping("/nuevoElementoTrueque")
+    @PostMapping("/nuevo-elemento-trueque")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String agregarElementoTrueque(@RequestBody ElementoTrueque nuevoElementoTrueque) throws Exception {
         ElementoTrueque nuevo = this.servicio.agregarElementoTrueque(nuevoElementoTrueque);
         return nuevo.getNombre();
     }
-
 }
