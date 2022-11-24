@@ -59,5 +59,4 @@ public class ElementoTrueque {
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Categoria.class)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_trueque_categorias"), nullable = true)
     private Categoria categoria;
-
 }

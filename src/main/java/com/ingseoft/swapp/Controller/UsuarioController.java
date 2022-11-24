@@ -45,7 +45,6 @@ public class UsuarioController {
     @GetMapping("/usuarios")
     public Iterable<Usuario> leerTodosLosUsuario() {
         return this.servicio.obtenerTodosLosUsuarios();
-
     }
 
     @PostMapping("/nuevo-usuario")

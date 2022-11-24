@@ -33,7 +33,6 @@ public class CategoriaController {
     @GetMapping("/categorias")
     public Iterable<Categoria> leerTodosLasCategorias() {
         return this.servicio.obtenerTodosLasCategorias();
-
     }
 
     @PostMapping("/nueva-categoria")

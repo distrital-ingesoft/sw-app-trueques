@@ -29,27 +29,17 @@ public class TruequeController {
     }
 
     // == Operaciones REST
-
-
-    @GetMapping("/")
-    public String getMessage(){
-        return "Hello World";
-    }
-    
-
-    @GetMapping("/Trueques")
+    @GetMapping("/trueques")
     public Iterable<Trueque> leerTodosLosTrueque() {
         return this.servicio.obtenerTodosLosTrueques();
-
     }
 
-    @PostMapping("/nuevoTrueque")
+    @PostMapping("/nuevo-trueque")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String agregarTrueque(@RequestBody Trueque nuevoTrueque) throws Exception {
         Trueque nuevo = this.servicio.agregarTrueque(nuevoTrueque);
         return "Trueque Iniciado" + nuevo.getId().toString();
     }
-
 }
 
 

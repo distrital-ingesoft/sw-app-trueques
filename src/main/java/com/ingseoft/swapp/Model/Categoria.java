@@ -26,5 +26,4 @@ public class Categoria {
 
     @Column(name = "nombre",length = 100)
     private String nombre;
-    
 }
