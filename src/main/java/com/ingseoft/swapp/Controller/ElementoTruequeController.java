@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingseoft.swapp.Dto.CrearElementoTruequeDto;
 import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Services.ElementoTruequeService;
 
@@ -37,7 +38,7 @@ public class ElementoTruequeController {
 
     @PostMapping("/nuevo-elemento-trueque")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarElementoTrueque(@RequestBody ElementoTrueque nuevoElementoTrueque) throws Exception {
+    public String agregarElementoTrueque(@RequestBody CrearElementoTruequeDto nuevoElementoTrueque) throws Exception {
         ElementoTrueque nuevo = this.servicio.agregarElementoTrueque(nuevoElementoTrueque);
         return nuevo.getNombre();
     }

@@ -1,5 +1,7 @@
 package com.ingseoft.swapp.Dto;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +23,9 @@ public class CrearUsuarioDto {
 
     String contrasenia;
 
+    Boolean activo;
+
     Integer rol_id;
 
-    Boolean activo;
+    List<Integer> elementos_trueque;
 }

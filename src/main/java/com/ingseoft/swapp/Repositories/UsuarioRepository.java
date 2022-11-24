@@ -14,4 +14,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     List<Usuario> findByCelular(Long celular);
 
     List<Usuario> findByDocumentoIdentificacion(Integer documento);
+
+    List<Usuario> findByElementosTrueque(Integer elementosTrueque);
 }

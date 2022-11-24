@@ -7,8 +7,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.ingseoft.swapp.Dto.CrearUsuarioDto;
+import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Model.Rol;
 import com.ingseoft.swapp.Model.Usuario;
+import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
 import com.ingseoft.swapp.Repositories.RolRepository;
 import com.ingseoft.swapp.Repositories.UsuarioRepository;
 
@@ -29,16 +31,19 @@ public class UsuarioService {
     // atributo
     private UsuarioRepository repositorioUsuarios;
     private RolRepository repositorioRoles;
+    private ElementoTruequeRepository repositorioElementosTrueque;
 
     // constructor -- recibe este parámetro
     // Spring al momento de crear este componentes, va a crear las dependencias
     // a inyectar las dependencias
     public UsuarioService(
         UsuarioRepository repositorioUsuarios,
-        RolRepository repositorioRoles
+        RolRepository repositorioRoles,
+        ElementoTruequeRepository repositorioElementosTrueque
     ) {
         this.repositorioUsuarios = repositorioUsuarios;
         this.repositorioRoles = repositorioRoles;
+        this.repositorioElementosTrueque = repositorioElementosTrueque;
     }
 
     // Casos de uso
@@ -66,16 +71,26 @@ public class UsuarioService {
             nuevoUsuario.getCelular(),
             nuevoUsuario.getCiudad(),
             nuevoUsuario.getContrasenia(),
+            nuevoUsuario.getActivo(),
             new Rol(),
-            nuevoUsuario.getActivo()
+            new ArrayList<ElementoTrueque>()
         );
 
-        Optional<Rol> rol = repositorioRoles.findById(nuevoUsuario.getRol_id());
+        Optional<Rol> rol = this.repositorioRoles.findById(nuevoUsuario.getRol_id());
         if(rol.isEmpty()) {
             throw new Exception("No existe el id de rol ingresado.");
         } else {
             parametro.setRol(rol.get());
         }
+
+        /* for(Integer idElementoTrueque: nuevoUsuario.getElementos_trueque()) {
+            Optional<ElementoTrueque> elementoTrueque = repositorioElementosTrueque.findById(idElementoTrueque);
+            if(elementoTrueque.isPresent()) {
+                parametro.getElementosTrueque().add(elementoTrueque.get());
+            } else {
+                throw new Exception("El elemento para trueque no existe.");
+            }
+        } */
 
         // 2. Verifica que no exista un correo similar
         if (!usuariosMismoCorreo.isEmpty()) {
