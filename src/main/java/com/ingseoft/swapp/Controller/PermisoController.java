@@ -31,12 +31,12 @@ public class PermisoController {
 
     // == Operaciones REST
 
-    @GetMapping("/Permisos")
+    @GetMapping("/permisos")
     public Iterable<Permiso> leerTodosLosPermisos() {
         return this.servicio.obtenerTodosLosPermisos();
     }
 
-    @PostMapping("/nuevoPermiso")
+    @PostMapping("/nuevo-permiso")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String agregarPermisos(@RequestBody CrearPermisoDto nuevoPermiso) throws Exception {
         Permiso nuevo = this.servicio.agregCrearPermisoDto(nuevoPermiso);

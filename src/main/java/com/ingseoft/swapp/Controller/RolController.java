@@ -33,13 +33,12 @@ public class RolController {
 
     // == Operaciones REST
 
-    @GetMapping("/Rol")
+    @GetMapping("/roles")
     public Iterable<Rol> leerTodosLosRoles() {
         return this.servicio.obtenerTodosLosRoles();
-
     }
 
-    @PostMapping("/nuevoRol")
+    @PostMapping("/nuevo-rol")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String agregarPermisos(@RequestBody Rol nuevoRol) throws Exception {
         Rol nuevo = this.servicio.agregarRol(nuevoRol);
