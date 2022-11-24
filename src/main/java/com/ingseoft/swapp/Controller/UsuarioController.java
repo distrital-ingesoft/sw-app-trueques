@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingseoft.swapp.Dto.CrearUsuarioDto;
 import com.ingseoft.swapp.Model.Usuario;
 import com.ingseoft.swapp.Services.UsuarioService;
 
@@ -49,7 +50,7 @@ public class UsuarioController {
 
     @PostMapping("/nuevo-usuario")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarUsuario(@RequestBody Usuario nuevoUsuario) throws Exception {
+    public String agregarUsuario(@RequestBody CrearUsuarioDto nuevoUsuario) throws Exception {
         Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
         return nuevo.getCorreo();
     }

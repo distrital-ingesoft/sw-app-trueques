@@ -1,10 +1,15 @@
 package com.ingseoft.swapp.Services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
+import com.ingseoft.swapp.Dto.CrearUsuarioDto;
+import com.ingseoft.swapp.Model.Rol;
 import com.ingseoft.swapp.Model.Usuario;
+import com.ingseoft.swapp.Repositories.RolRepository;
 import com.ingseoft.swapp.Repositories.UsuarioRepository;
 
 // servicio independiente de la tecnología de invocación
@@ -22,31 +27,55 @@ import com.ingseoft.swapp.Repositories.UsuarioRepository;
 public class UsuarioService {
 
     // atributo
-    private UsuarioRepository repositorio;
+    private UsuarioRepository repositorioUsuarios;
+    private RolRepository repositorioRoles;
 
     // constructor -- recibe este parámetro
     // Spring al momento de crear este componentes, va a crear las dependencias
     // a inyectar las dependencias
-    public UsuarioService(UsuarioRepository repositorio) {
-        this.repositorio = repositorio;
+    public UsuarioService(
+        UsuarioRepository repositorioUsuarios,
+        RolRepository repositorioRoles
+    ) {
+        this.repositorioUsuarios = repositorioUsuarios;
+        this.repositorioRoles = repositorioRoles;
     }
 
     // Casos de uso
 
     public Iterable<Usuario> obtenerTodosLosUsuarios() {
-        return this.repositorio.findAll();
+        return this.repositorioUsuarios.findAll();
     }
 
     // CU001
     // 1. Inicia Sesión
     // 2. Ingresa correo
-    public Usuario agregarUsuario (Usuario nuevoUsuario) throws Exception {
+    public Usuario agregarUsuario (CrearUsuarioDto nuevoUsuario) throws Exception {
         // 2. sistema revisa que no existe otro trocador con el mismo nombre
-        List<Usuario> usuariosMismoCorreo = this.repositorio.findByCorreo(nuevoUsuario.getCorreo());
+        List<Usuario> usuariosMismoCorreo = this.repositorioUsuarios.findByCorreo(nuevoUsuario.getCorreo());
 
-        List<Usuario> usuariosMismoCelular = this.repositorio.findByCelular(nuevoUsuario.getCelular());
+        List<Usuario> usuariosMismoCelular = this.repositorioUsuarios.findByCelular(nuevoUsuario.getCelular());
 
-        List<Usuario> usuariosMismoDocumento = this.repositorio.findByDocumentoIdentificacion(nuevoUsuario.getDocumentoIdentificacion());
+        List<Usuario> usuariosMismoDocumento = this.repositorioUsuarios.findByDocumentoIdentificacion(nuevoUsuario.getDocumentoIdentificacion());
+
+        Usuario parametro = new Usuario(
+            nuevoUsuario.getId(),
+            nuevoUsuario.getNombreCompleto(),
+            nuevoUsuario.getDocumentoIdentificacion(),
+            nuevoUsuario.getCorreo(),
+            nuevoUsuario.getCelular(),
+            nuevoUsuario.getCiudad(),
+            nuevoUsuario.getContrasenia(),
+            new Rol(),
+            nuevoUsuario.getActivo()
+        );
+
+        Optional<Rol> rol = repositorioRoles.findById(nuevoUsuario.getRol_id());
+        if(rol.isEmpty()) {
+            throw new Exception("No existe el id de rol ingresado.");
+        } else {
+            parametro.setRol(rol.get());
+        }
 
         // 2. Verifica que no exista un correo similar
         if (!usuariosMismoCorreo.isEmpty()) {
@@ -57,7 +86,7 @@ public class UsuarioService {
             throw new Exception("Ya existe un usuario con el mismo documento.");
         } else {
             // 3. sistema almacena el trocador
-            return this.repositorio.save(nuevoUsuario);
+            return this.repositorioUsuarios.save(parametro);
         }
 
     }
