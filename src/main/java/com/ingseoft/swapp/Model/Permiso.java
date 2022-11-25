@@ -3,6 +3,7 @@ package com.ingseoft.swapp.Model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import javax.persistence.ForeignKey;
 
 @Table(name = "permisos")
 @NoArgsConstructor
@@ -35,12 +37,7 @@ public class Permiso {
     @Column(name = "descripcion", length = 250)
     String descripcion;
 
-    @ManyToOne(cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE,
-        CascadeType.DETACH,
-        CascadeType.REFRESH
-    })
-    @JoinColumn(name="rol_id")
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
+    @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_permisos_rol"), nullable = true)
     Rol rol;
 }

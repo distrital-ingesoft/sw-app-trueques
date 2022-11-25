@@ -1,15 +1,17 @@
 package com.ingseoft.swapp.Services;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
 import com.ingseoft.swapp.Dto.CrearElementoTruequeDto;
 import com.ingseoft.swapp.Model.Categoria;
+import com.ingseoft.swapp.Model.ElementoDeseado;
 import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Model.Usuario;
 import com.ingseoft.swapp.Repositories.CategoriaRepository;
+import com.ingseoft.swapp.Repositories.ElementoDeseadoRepository;
 import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
 import com.ingseoft.swapp.Repositories.UsuarioRepository;
 
@@ -22,16 +24,19 @@ public class ElementoTruequeService {
     private ElementoTruequeRepository repositorioElementosTrueque;
     private UsuarioRepository repositorioUsuarios;
     private CategoriaRepository repositorioCategorias;
+    private ElementoDeseadoRepository repositorioElementosDeseados;
 
 
     public ElementoTruequeService(
         ElementoTruequeRepository repositorioElementosTrueque,
         UsuarioRepository repositorioUsuarios,
-        CategoriaRepository repositorioCategorias
+        CategoriaRepository repositorioCategorias,
+        ElementoDeseadoRepository repositorioElementosDeseados
     ) {
         this.repositorioElementosTrueque = repositorioElementosTrueque;
         this.repositorioUsuarios = repositorioUsuarios;
         this.repositorioCategorias = repositorioCategorias;
+        this.repositorioElementosDeseados = repositorioElementosDeseados;
     }
 
     // Casos de uso
@@ -49,7 +54,8 @@ public class ElementoTruequeService {
             nuevoElementoTrueque.getDisponible(),
             nuevoElementoTrueque.getEstadoElemento(),
             new Usuario(),
-            new Categoria()
+            new Categoria(),
+            new ArrayList<>()
         );
 
         Optional<Usuario> usuario = this.repositorioUsuarios.findById(nuevoElementoTrueque.getUsuario_id());
@@ -67,6 +73,15 @@ public class ElementoTruequeService {
         } else {
             parametro.setCategoria(categoria.get());
         }
+
+        /* for(Integer idElementoDeseado: nuevoElementoTrueque.getElementosDeseados()) {
+            Optional<ElementoDeseado> elementoDeseado = repositorioElementosDeseados.findById(idElementoDeseado);
+            if(elementoDeseado.isPresent()) {
+                parametro.getElementosDeseados().add(elementoDeseado.get());
+            } else {
+                throw new Exception("El elemento deseado no existe.");
+            }
+        } */
 
         return this.repositorioElementosTrueque.save(parametro);
     }

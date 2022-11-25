@@ -1,9 +1,14 @@
 package com.ingseoft.swapp.Services;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
+import com.ingseoft.swapp.Dto.CrearElementoDeseadoDto;
 import com.ingseoft.swapp.Model.ElementoDeseado;
+import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Repositories.ElementoDeseadoRepository;
+import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
 
 
 
@@ -11,23 +16,38 @@ import com.ingseoft.swapp.Repositories.ElementoDeseadoRepository;
 public class ElementoDeseadoService {
 
     // atributo
-    private ElementoDeseadoRepository repositorio;
+    private ElementoDeseadoRepository repositorioElementoDeseado;
+    private ElementoTruequeRepository repositorioElementoTrueque;
 
-
-    public ElementoDeseadoService(ElementoDeseadoRepository repositorio) {
-        this.repositorio = repositorio;
+    public ElementoDeseadoService(
+        ElementoDeseadoRepository repositorioElementoDeseado,
+        ElementoTruequeRepository repositorioElementoTrueque
+    ) {
+        this.repositorioElementoDeseado = repositorioElementoDeseado;
+        this.repositorioElementoTrueque = repositorioElementoTrueque;
     }
 
     // Casos de uso
 
     public Iterable<ElementoDeseado> obtenerTodosLosElementoDeseados() {
-        return this.repositorio.findAll();
+        return this.repositorioElementoDeseado.findAll();
     }
-    
 
-    public ElementoDeseado agregarElementoDeseado (ElementoDeseado nuevoElementoDeseado) throws Exception {
+    public ElementoDeseado agregarElementoDeseado (CrearElementoDeseadoDto nuevoElementoDeseado) throws Exception {
+        ElementoDeseado parametro = new ElementoDeseado(
+            nuevoElementoDeseado.getId(),
+            nuevoElementoDeseado.getNombre(),
+            new ElementoTrueque()
+        );
 
-            return this.repositorio.save(nuevoElementoDeseado);
+        Optional<ElementoTrueque> elementoTrueque = this.repositorioElementoTrueque.findById(nuevoElementoDeseado.getElementoTruequeId());
 
+        if(elementoTrueque.isEmpty()) {
+            throw new Exception("No existe el id del elemento para trueque.");
+        } else {
+            parametro.setElementoTrueque(elementoTrueque.get());
+        }
+
+        return this.repositorioElementoDeseado.save(parametro);
     }
 }

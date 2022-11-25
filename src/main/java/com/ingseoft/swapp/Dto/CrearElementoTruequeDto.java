@@ -1,5 +1,7 @@
 package com.ingseoft.swapp.Dto;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +26,6 @@ public class CrearElementoTruequeDto {
     private Integer usuario_id;
 
     private Integer categoria_id;
+
+    private List<Integer> elementosDeseados;
 }

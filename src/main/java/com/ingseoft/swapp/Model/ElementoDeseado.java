@@ -35,6 +35,6 @@ public class ElementoDeseado {
     private String nombre;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ElementoTrueque.class)
-    @JoinColumn(name = "elementos_trueque_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_deseados_elementos_trueque"), nullable = true)
+    @JoinColumn(name = "elemento_trueque_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_deseados_elemento_trueque"), nullable = true)
     private ElementoTrueque elementoTrueque;
 }

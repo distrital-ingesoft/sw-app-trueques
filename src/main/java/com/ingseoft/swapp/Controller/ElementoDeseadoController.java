@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingseoft.swapp.Dto.CrearElementoDeseadoDto;
 import com.ingseoft.swapp.Model.ElementoDeseado;
 import com.ingseoft.swapp.Services.ElementoDeseadoService;
 
@@ -30,15 +31,14 @@ public class ElementoDeseadoController {
 
     // == Operaciones REST
 
-    @GetMapping("/ElementosDeseados")
+    @GetMapping("/elementos-deseados")
     public Iterable<ElementoDeseado> leerTodosLosElementoDeseados() {
         return this.servicio.obtenerTodosLosElementoDeseados();
-
     }
 
-    @PostMapping("/nuevoElementoDeseado")
+    @PostMapping("/nuevo-elemento-deseado")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarElementoDeseado(@RequestBody ElementoDeseado nuevoElementoDeseado) throws Exception {
+    public String agregarElementoDeseado(@RequestBody CrearElementoDeseadoDto nuevoElementoDeseado) throws Exception {
         ElementoDeseado nuevo = this.servicio.agregarElementoDeseado(nuevoElementoDeseado);
         return nuevo.getNombre();
     }

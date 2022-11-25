@@ -1,6 +1,9 @@
 package com.ingseoft.swapp.Model;
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -59,4 +65,8 @@ public class ElementoTrueque {
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Categoria.class)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_trueque_categorias"), nullable = true)
     private Categoria categoria;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "elementoTrueque")
+    private List<ElementoDeseado> elementosDeseados;
 }

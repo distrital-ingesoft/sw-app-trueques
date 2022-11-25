@@ -43,11 +43,6 @@ public class Rol {
     private Boolean activo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "rol", cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE,
-        CascadeType.DETACH,
-        CascadeType.REFRESH
-    })
+    @OneToMany(mappedBy = "rol")
     private List<Permiso> permisos;
 }

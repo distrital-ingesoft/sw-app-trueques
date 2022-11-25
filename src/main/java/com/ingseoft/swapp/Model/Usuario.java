@@ -63,11 +63,6 @@ public class Usuario {
     Rol rol;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "usuario", cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE,
-        CascadeType.DETACH,
-        CascadeType.REFRESH
-    })
+    @OneToMany(mappedBy = "usuario")
     List<ElementoTrueque> elementosTrueque;
 }
