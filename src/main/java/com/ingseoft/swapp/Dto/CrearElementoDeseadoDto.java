@@ -11,5 +11,5 @@ public class CrearElementoDeseadoDto {
 
     private String nombre;
 
-    private Integer elementoTruequeId;
+    private Integer elemento_trueque_id;
 }

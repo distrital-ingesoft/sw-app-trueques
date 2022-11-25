@@ -40,7 +40,7 @@ public class ElementoDeseadoService {
             new ElementoTrueque()
         );
 
-        Optional<ElementoTrueque> elementoTrueque = this.repositorioElementoTrueque.findById(nuevoElementoDeseado.getElementoTruequeId());
+        Optional<ElementoTrueque> elementoTrueque = this.repositorioElementoTrueque.findById(nuevoElementoDeseado.getElemento_trueque_id());
 
         if(elementoTrueque.isEmpty()) {
             throw new Exception("No existe el id del elemento para trueque.");

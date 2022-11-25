@@ -21,7 +21,7 @@ public class CrearTruequeDto {
 
     private Integer solicitante_id;
 
-    private Integer elementoDeseadoId;
+    private Integer elemento_deseado_id;
 
-    private Integer elementoTruequeId;
+    private Integer elemento_trueque_id;
 }

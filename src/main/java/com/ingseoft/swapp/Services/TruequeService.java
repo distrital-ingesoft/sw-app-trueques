@@ -64,7 +64,7 @@ public class TruequeService {
             parametro.setSolicitante(usuario.get());
         }
 
-        Optional<ElementoDeseado> elementoDeseado = this.repositorioElementosDeseados.findById(nuevoTrueque.getElementoDeseadoId());
+        Optional<ElementoDeseado> elementoDeseado = this.repositorioElementosDeseados.findById(nuevoTrueque.getElemento_deseado_id());
 
         if(elementoDeseado.isEmpty()) {
             throw new Exception("No existe el id del elemento deseado ingresado.");
@@ -72,7 +72,7 @@ public class TruequeService {
             parametro.setElementoDeseado(elementoDeseado.get());
         }
 
-        Optional<ElementoTrueque> elementoTrueque = this.repositorioElementosTrueque.findById(nuevoTrueque.getElementoTruequeId());
+        Optional<ElementoTrueque> elementoTrueque = this.repositorioElementosTrueque.findById(nuevoTrueque.getElemento_trueque_id());
 
         if(elementoTrueque.isEmpty()) {
             throw new Exception("No existe el id del elemento deseado ingresado.");
