@@ -53,5 +53,4 @@ public class UsuarioController {
         Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
         return nuevo.getCorreo();
     }
-
 }

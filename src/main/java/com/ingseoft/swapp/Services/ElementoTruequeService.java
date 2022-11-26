@@ -74,15 +74,6 @@ public class ElementoTruequeService {
             parametro.setCategoria(categoria.get());
         }
 
-        /* for(Integer idElementoDeseado: nuevoElementoTrueque.getElementosDeseados()) {
-            Optional<ElementoDeseado> elementoDeseado = repositorioElementosDeseados.findById(idElementoDeseado);
-            if(elementoDeseado.isPresent()) {
-                parametro.getElementosDeseados().add(elementoDeseado.get());
-            } else {
-                throw new Exception("El elemento deseado no existe.");
-            }
-        } */
-
         return this.repositorioElementosTrueque.save(parametro);
     }
 }

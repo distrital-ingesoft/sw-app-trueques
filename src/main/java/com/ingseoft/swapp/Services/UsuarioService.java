@@ -83,15 +83,6 @@ public class UsuarioService {
             parametro.setRol(rol.get());
         }
 
-        /* for(Integer idElementoTrueque: nuevoUsuario.getElementos_trueque()) {
-            Optional<ElementoTrueque> elementoTrueque = repositorioElementosTrueque.findById(idElementoTrueque);
-            if(elementoTrueque.isPresent()) {
-                parametro.getElementosTrueque().add(elementoTrueque.get());
-            } else {
-                throw new Exception("El elemento para trueque no existe.");
-            }
-        } */
-
         // 2. Verifica que no exista un correo similar
         if (!usuariosMismoCorreo.isEmpty()) {
             throw new Exception("Ya existe un usuario con el mismo correo.");

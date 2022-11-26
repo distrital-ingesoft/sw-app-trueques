@@ -23,11 +23,9 @@ public class CategoriaService {
     public Iterable<Categoria> obtenerTodosLasCategorias() {
         return this.repositorio.findAll();
     }
-    
+
 
     public Categoria agregarCategoria(Categoria nuevaCategoria) throws Exception {
-
-            return this.repositorio.save(nuevaCategoria);
-
+        return this.repositorio.save(nuevaCategoria);
     }
 }

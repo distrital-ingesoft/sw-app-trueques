@@ -45,17 +45,4 @@ public class PermisoService {
         permiso.setRol(rol.get());
         return this.repositorioPermiso.save(permiso);
     }
-
-    /* public Rol crearRolDto (CrearRolDto nuevoRol) throws Exception {
-        Rol parametro = new Rol(nuevoRol.getId(), nuevoRol.getNombre(), nuevoRol.getDescripcion(), nuevoRol.getActivo(), new ArrayList<>());
-        for(Integer idPermiso: nuevoRol.getPermisos()) {
-            Optional<Permiso> permiso = repositorioPermisos.findById(idPermiso);
-            if(permiso.isPresent()) {
-                parametro.getPermisos().add(permiso.get());
-            } else {
-                throw new Exception("Uno de los permisos no existe.");
-            }
-        }
-        return this.repositorioRoles.save(parametro);
-    } */
 }
