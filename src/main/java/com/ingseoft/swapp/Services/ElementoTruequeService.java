@@ -45,6 +45,12 @@ public class ElementoTruequeService {
     }
 
     public ElementoTrueque agregarElementoTrueque (CrearElementoTruequeDto nuevoElementoTrueque) throws Exception {
+        // 1. Ingresa nombre del elemento.
+        // 2. Ingresa enlace de imagen de elemento.
+        // 3. Ingresa descripción.
+        // 4. Se almacena inicialmente como disponible (disponible = true).
+        // 5. Ingresa el precio del elemento.
+        // 6. Se almacena inicialmente con estado ACTIVO.
         ElementoTrueque parametro = new ElementoTrueque(
             nuevoElementoTrueque.getId(),
             nuevoElementoTrueque.getNombre(),
@@ -58,14 +64,8 @@ public class ElementoTruequeService {
             new ArrayList<>()
         );
 
-        Optional<Usuario> usuario = this.repositorioUsuarios.findById(nuevoElementoTrueque.getUsuario_id());
-
-        if(usuario.isEmpty()) {
-            throw new Exception("No existe el id de usuario ingresado.");
-        } else {
-            parametro.setUsuario(usuario.get());
-        }
-
+        // 7. Selecciona categoría del elemento.
+        // 8. Valida que exista la categoría.
         Optional<Categoria> categoria = this.repositorioCategorias.findById(nuevoElementoTrueque.getCategoria_id());
 
         if(categoria.isEmpty()) {
@@ -74,6 +74,23 @@ public class ElementoTruequeService {
             parametro.setCategoria(categoria.get());
         }
 
+        // 9. Asocia los elementos deseados que quiere como trueque del elemento registrado.
+
+        // 10. Valida que existan los elementos deseados seleccionados.
+
+        // 11. Valida que el usuario no supere los 3 elementos deseados.
+
+        // 12. Ingresa el id del usuario que agregó el elemento.
+        // 13. Valida que exista el usuario.
+        Optional<Usuario> usuario = this.repositorioUsuarios.findById(nuevoElementoTrueque.getUsuario_id());
+
+        if(usuario.isEmpty()) {
+            throw new Exception("No existe el id de usuario ingresado.");
+        } else {
+            parametro.setUsuario(usuario.get());
+        }
+
+        // 14. Almacena el elemento en la base de datos.
         return this.repositorioElementosTrueque.save(parametro);
     }
 }
