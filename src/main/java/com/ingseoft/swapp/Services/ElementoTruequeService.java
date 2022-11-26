@@ -50,7 +50,7 @@ public class ElementoTruequeService {
         // 3. Ingresa descripción.
         // 4. Se almacena inicialmente como disponible (disponible = true).
         // 5. Ingresa el precio del elemento.
-        // 6. Se almacena inicialmente con estado ACTIVO.
+        // 6. Se almacena inicialmente con estado ACTIVO (estadoElemento = "ACTIVO").
         ElementoTrueque parametro = new ElementoTrueque(
             nuevoElementoTrueque.getId(),
             nuevoElementoTrueque.getNombre(),

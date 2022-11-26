@@ -1,7 +1,5 @@
 package com.ingseoft.swapp.Dto;
 
-import java.util.List;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
