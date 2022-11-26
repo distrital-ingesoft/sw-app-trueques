@@ -43,8 +43,13 @@ public class TruequeService {
         return this.repositorioTrueques.findAll();
     }
 
+    /*
+     * CU005
+     * Solicitar trueque
+     */
+    public Trueque solicitarTrueque(CrearTruequeDto nuevoTrueque) throws Exception {
 
-    public Trueque agregarTrueque(CrearTruequeDto nuevoTrueque) throws Exception {
+
         Trueque parametro = new Trueque(
             nuevoTrueque.getId(),
             nuevoTrueque.getEstado(),

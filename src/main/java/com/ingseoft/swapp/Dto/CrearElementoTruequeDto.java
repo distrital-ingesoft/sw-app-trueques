@@ -19,13 +19,7 @@ public class CrearElementoTruequeDto {
 
     private Double precio;
 
-    private Boolean disponible;
-
-    private String estadoElemento;
-
     private Integer usuario_id;
 
     private Integer categoria_id;
-
-    private List<Integer> elementosDeseados;
 }

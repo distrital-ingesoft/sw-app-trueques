@@ -57,8 +57,8 @@ public class ElementoTruequeService {
             nuevoElementoTrueque.getDescripcion(),
             nuevoElementoTrueque.getEnlaceImagen(),
             nuevoElementoTrueque.getPrecio(),
-            nuevoElementoTrueque.getDisponible(),
-            nuevoElementoTrueque.getEstadoElemento(),
+            true,
+            "ACTIVO",
             new Usuario(),
             new Categoria(),
             new ArrayList<>()
