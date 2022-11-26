@@ -8,10 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -50,7 +52,8 @@ public class Trueque {
     @Column(name = "precio_logistica",length = 18)
     private Double precioLogistica;
 
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Usuario.class)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Usuario.class)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_usuario"), nullable = true)
     private Usuario solicitante;
 

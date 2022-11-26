@@ -1,5 +1,7 @@
 package com.ingseoft.swapp.Model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,8 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,27 +35,36 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    Integer id;
+    private Integer id;
     
     @Column(name = "nombre_completo", length = 200)
-    String nombreCompleto;
+    private String nombreCompleto;
 
     @Column(name = "documento_indentificacion")
-    Integer documentoIdentificacion;
+    private Integer documentoIdentificacion;
 
     @Column(name = "correo", length = 100)
-    String correo;
+    private String correo;
 
     @Column(name = "celular")
-    Long celular;
+    private Long celular;
 
     @Column(name = "ciudad",length = 100)
-    String contrasenia;
+    private String contrasenia;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
     @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Usuarios_Roles"), nullable = true)
-    Rol rol;
+    private Rol rol;
 
     @Column(name = "estado")
-    Boolean estado;
+    private Boolean estado;
+
+    //@lazy--> no deja tener en ambas Fetch
+    @OneToMany(mappedBy = "usuario")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<ElementoTrueque> elementosTrueque;
+    
+    @OneToMany(mappedBy = "solicitante")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Trueque> trueques;
 }

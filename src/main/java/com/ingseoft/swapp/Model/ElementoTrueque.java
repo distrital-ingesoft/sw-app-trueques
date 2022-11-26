@@ -1,6 +1,8 @@
 package com.ingseoft.swapp.Model;
 
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -52,12 +61,19 @@ public class ElementoTrueque {
     @Column(name = "estado_elemento",length = 100)
     private String estadoElemento;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Usuario.class)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_trueque_usuarios"), nullable = true)
     private Usuario usuario;
 
+
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Categoria.class)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_trueque_categorias"), nullable = true)
     private Categoria categoria;
+
+
+    @OneToMany(mappedBy = "elementoTrueque")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<ElementoDeseado> elementosDeseados;
 
 }

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,6 +36,7 @@ public class ElementoDeseado {
     @Column(name = "nombre",length = 100)
     private String nombre;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ElementoTrueque.class)
     @JoinColumn(name = "elementos_trueque_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_deseados_elementos_trueque"), nullable = true)
     private ElementoTrueque elementoTrueque;
