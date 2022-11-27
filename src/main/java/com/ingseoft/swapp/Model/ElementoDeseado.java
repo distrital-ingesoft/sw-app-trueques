@@ -40,4 +40,8 @@ public class ElementoDeseado {
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ElementoTrueque.class)
     @JoinColumn(name = "elementos_trueque_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_deseados_elementos_trueque"), nullable = true)
     private ElementoTrueque elementoTrueque;
+
+    // @JsonBackReference
+    // @ManyToOne
+    // private ElementoTrueque elementoTrueque;
 }

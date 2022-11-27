@@ -52,12 +52,17 @@ public class Usuario {
     @Column(name = "ciudad",length = 100)
     private String contrasenia;
 
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
-    @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Usuarios_Roles"), nullable = true)
-    private Rol rol;
+    @Column(name = "direccion", length = 200)
+    private String direccion;
 
     @Column(name = "estado")
     private Boolean estado;
+
+    //---------------------Relaciones------------------------------------------------
+
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
+    @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Usuarios_Roles"), nullable = true)
+    private Rol rol;
 
     //@lazy--> no deja tener en ambas Fetch
     @OneToMany(mappedBy = "usuario")

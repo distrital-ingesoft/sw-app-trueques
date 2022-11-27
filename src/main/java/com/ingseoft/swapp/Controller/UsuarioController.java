@@ -1,13 +1,18 @@
 package com.ingseoft.swapp.Controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Model.Usuario;
 import com.ingseoft.swapp.Services.UsuarioService;
 
@@ -54,4 +59,10 @@ public class UsuarioController {
         return nuevo.getCorreo();
     }
 
+    @GetMapping("/Usuarios/id")
+    public List<ElementoTrueque> leerTodosLosElementosUsuario(@RequestParam Integer id) {
+        Optional<Usuario> usuario = this.servicio.ObtenerUsuario(id);
+        Usuario usr = usuario.get();
+        return usr.getElementosTrueque();
+    }
 }

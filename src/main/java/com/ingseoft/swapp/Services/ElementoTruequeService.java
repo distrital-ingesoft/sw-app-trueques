@@ -1,7 +1,11 @@
 package com.ingseoft.swapp.Services;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ingseoft.swapp.Model.Categoria;
 import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
 
@@ -11,6 +15,7 @@ import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
 public class ElementoTruequeService {
 
     // atributo
+    @Autowired
     private ElementoTruequeRepository repositorio;
 
 
@@ -20,14 +25,24 @@ public class ElementoTruequeService {
 
     // Casos de uso
 
+
     public Iterable<ElementoTrueque> obtenerTodosLosElementoTrueque() {
         return this.repositorio.findAll();
     }
     
 
-    public ElementoTrueque agregarElementoTrueque (ElementoTrueque nuevoElementoTrueque) throws Exception {
+    public ElementoTrueque agregarElementoTrueque (ElementoTrueque nuevoElementoTrueque){
+        return this.repositorio.save(nuevoElementoTrueque);
+    }
 
-            return this.repositorio.save(nuevoElementoTrueque);
+    public Optional<ElementoTrueque> ObtenerElementoTrueque (Integer id){
+        return this.repositorio.findById(id);
+    }
 
+
+    public Iterable<ElementoTrueque> ObtenerElementoTruequePorCategoria (Integer id){
+        Categoria categoria = new Categoria();
+        categoria.setId(id);
+        return this.repositorio.findByCategoria(categoria);
     }
 }

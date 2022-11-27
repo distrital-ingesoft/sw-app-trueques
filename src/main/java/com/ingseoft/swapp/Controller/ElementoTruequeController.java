@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,11 +37,19 @@ public class ElementoTruequeController {
 
     }
 
+
+
     @PostMapping("/nuevoElementoTrueque")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String agregarElementoTrueque(@RequestBody ElementoTrueque nuevoElementoTrueque) throws Exception {
         ElementoTrueque nuevo = this.servicio.agregarElementoTrueque(nuevoElementoTrueque);
         return nuevo.getNombre();
+    }
+
+
+    @GetMapping("/ElementosTrueque/categoriaId")
+    public Iterable<ElementoTrueque> leerElementoTruequePorCategoria(@RequestParam Integer categoriaId) {
+        return this.servicio.ObtenerElementoTruequePorCategoria(categoriaId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ingseoft.swapp.Services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ingseoft.swapp.Model.Categoria;
@@ -11,6 +12,7 @@ import com.ingseoft.swapp.Repositories.CategoriaRepository;
 public class CategoriaService {
 
     // atributo
+    @Autowired
     private CategoriaRepository repositorio;
 
 

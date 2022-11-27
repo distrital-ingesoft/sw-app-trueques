@@ -52,6 +52,8 @@ public class Trueque {
     @Column(name = "precio_logistica",length = 18)
     private Double precioLogistica;
 
+    //----------------Relaciones -------------------------------------------------------------------
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Usuario.class)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_usuario"), nullable = true)

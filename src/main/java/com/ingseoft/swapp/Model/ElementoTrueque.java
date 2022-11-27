@@ -1,8 +1,10 @@
 package com.ingseoft.swapp.Model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+// import org.hibernate.annotations.LazyCollection;
+// import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -72,8 +74,12 @@ public class ElementoTrueque {
     private Categoria categoria;
 
 
-    @OneToMany(mappedBy = "elementoTrueque")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<ElementoDeseado> elementosDeseados;
+    // @OneToMany(mappedBy = "elementoTrueque")
+    // @LazyCollection(LazyCollectionOption.FALSE)
+    // private List<ElementoDeseado> elementosDeseados;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<ElementoDeseado> elementosDeseados = new ArrayList<>();
+
 
 }
