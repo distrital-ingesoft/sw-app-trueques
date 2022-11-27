@@ -53,9 +53,11 @@ public class UsuarioService {
 
     }
 
-    // CU003 Registrar Usuario
-    public Optional<Usuario> ObtenerUsuario (Integer id){
-        return this.repositorio.findById(id);
+    // CU000 Traer elementos trueque por usuario
+    public Usuario ObtenerUsuario (Integer id){
+        Optional<Usuario> usuario = this.repositorio.findById(id);
+        Usuario usr = usuario.get();
+        return usr;
     }
     //-----------------Otros--------------------------------------------
 

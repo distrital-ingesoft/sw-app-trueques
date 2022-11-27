@@ -59,10 +59,9 @@ public class UsuarioController {
         return nuevo.getCorreo();
     }
 
-    @GetMapping("/Usuarios/id")
+    @GetMapping("/ElementosUsuarios/id")
     public List<ElementoTrueque> leerTodosLosElementosUsuario(@RequestParam Integer id) {
-        Optional<Usuario> usuario = this.servicio.ObtenerUsuario(id);
-        Usuario usr = usuario.get();
-        return usr.getElementosTrueque();
+        Usuario usuario = this.servicio.ObtenerUsuario(id);
+        return usuario.getElementosTrueque();
     }
 }

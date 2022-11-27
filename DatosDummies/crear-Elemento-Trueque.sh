@@ -3,11 +3,11 @@
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombre":"Zapato", "descripcion": "zapato negro", "enlaceImagen":"test", "precio": 150000, "disponible": true, "estadoElemento":"Nuevo", "usuario_id": 1, "categoria":{"id":1}}' \
+    --data '{     "nombre":"Zapatos", "descripcion": "Zapatos negro", "enlaceImagen":"test", "precio": 2500, "disponible": true, "estadoElemento":"usado", "usuario":{ "id":1 }, "categoria":{ "id":2 }, "elementosDeseados":[ { "nombre":"Casa" }, { "nombre":"Tenis" }, { "nombre":"Balon" } ]}' \
     http://127.0.0.1:8080/nuevoElementoTrueque/   
 
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombre":"Balon", "descripcion": "Balon mundial", "enlaceImagen":"test2", "precio": 4000, "disponible": true, "estadoElemento":"Usado", "usuario_id": 1, "categoria":{"id":1}}' \
+    --data '{     "nombre":"Celular", "descripcion": "Iphone", "enlaceImagen":"test", "precio": 15900, "disponible": true, "estadoElemento":"Nuevo", "usuario":{ "id":2 }, "categoria":{ "id":3 }, "elementosDeseados":[ { "nombre":"Portatil" }, { "nombre":"Reloj" }, { "nombre":"Televisor" } ]}' \
     http://127.0.0.1:8080/nuevoElementoTrueque/      
