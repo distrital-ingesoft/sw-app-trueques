@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -58,9 +59,12 @@ public class Usuario {
     @Column(name = "estado")
     private Boolean estado;
 
+    @Column(name = "contrasena")
+    private String contrasena;
+
     //---------------------Relaciones------------------------------------------------
 
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
     @JoinColumn(name = "rol_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_Usuarios_Roles"), nullable = true)
     private Rol rol;
 

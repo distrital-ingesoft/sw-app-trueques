@@ -52,11 +52,19 @@ public class UsuarioController {
 
     }
 
+    @PostMapping("/Log")
+    public Boolean ValidarContrasena(@RequestBody Usuario validarUsuario) {
+         boolean validacion = this.servicio.validarUsuario(validarUsuario);
+         return validacion;
+
+    }
+
     @PostMapping("/nuevoUsuario")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarUsuario(@RequestBody Usuario nuevoUsuario) throws Exception {
-        Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
-        return nuevo.getCorreo();
+    public Boolean agregarUsuario(@RequestBody Usuario nuevoUsuario) {
+        //Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
+        boolean creado = this.servicio.agregarUsuario(nuevoUsuario);
+        return creado;
     }
 
     @GetMapping("/ElementosUsuarios/id")

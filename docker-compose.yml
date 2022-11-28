@@ -63,3 +63,5 @@ services:
         # solo se conecta al servidor swapp-db
         environment:
             - PMA_HOST=swapp-db
+
+

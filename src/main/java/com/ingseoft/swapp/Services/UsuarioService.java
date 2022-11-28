@@ -37,18 +37,18 @@ public class UsuarioService {
     
     // CU003 Registrar Usuario
     // 1. actor ingresa datos del trocador
-    // 2. sistema revisa que no existe otro trocador con el mismo nombre
+    // 2. sistema revisa que no existe otro trocador con el mismo correo
     // 3. sistema almacena el trocador
-    public Usuario agregarUsuario (Usuario nuevoUsuario) throws Exception {
+    public Boolean agregarUsuario (Usuario nuevoUsuario)  {
 
-        // 2. sistema revisa que no existe otro trocador con el mismo nombre
-        if (nuevoUsuario.getCorreo().equals("ejemplo")) {
-            throw new Exception("Correo ya existe!!");
-        
+        // 2. sistema revisa que no existe otro trocador con el mismo correo
+        if (this.repositorio.existsByCorreo(nuevoUsuario.getCorreo())) {
+            return false;
         } else {
 
             // 3. sistema almacena el trocador
-            return this.repositorio.save(nuevoUsuario);
+            this.repositorio.save(nuevoUsuario);
+            return true;
         }
 
     }
@@ -59,11 +59,35 @@ public class UsuarioService {
         Usuario usr = usuario.get();
         return usr;
     }
+
+    // CU00 Login validar clave
+    public boolean validarUsuario(Usuario validarUsuario) {
+    
+            // Sistema revisa si existe correo
+            if (this.repositorio.existsByCorreo(validarUsuario.getCorreo())) {
+                // Validar Clave
+                Usuario usuario = this.repositorio.findByCorreo(validarUsuario.getCorreo()).get();
+                if(usuario.getContrasena().equals(validarUsuario.getContrasena())){
+                    //Contraseña Correcta
+                    return true;
+                }else {
+                    //Contraseña Incorrecta
+                    return false;
+                }
+            } else {
+                // Correo no existe
+                return false;
+            }
+
+
+    }
     //-----------------Otros--------------------------------------------
 
     public Iterable<Usuario> obtenerTodosLosUsuarios() {
         return this.repositorio.findAll();
     }
+
+
 
 
 
