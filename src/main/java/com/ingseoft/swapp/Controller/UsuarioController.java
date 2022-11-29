@@ -1,7 +1,8 @@
 package com.ingseoft.swapp.Controller;
 
 import java.util.List;
-import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,17 +54,17 @@ public class UsuarioController {
     }
 
     @PostMapping("/Log")
-    public Boolean ValidarContrasena(@RequestBody Usuario validarUsuario) {
-         boolean validacion = this.servicio.validarUsuario(validarUsuario);
-         return validacion;
+    public Usuario  ValidarContrasena(@RequestBody Usuario validarUsuario){
+         Usuario usuario = this.servicio.validarUsuario(validarUsuario);
+         return usuario;
 
     }
 
     @PostMapping("/nuevoUsuario")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Boolean agregarUsuario(@RequestBody Usuario nuevoUsuario) {
+    public Usuario agregarUsuario(@RequestBody Usuario nuevoUsuario) {
         //Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
-        boolean creado = this.servicio.agregarUsuario(nuevoUsuario);
+        Usuario creado = this.servicio.agregarUsuario(nuevoUsuario);
         return creado;
     }
 

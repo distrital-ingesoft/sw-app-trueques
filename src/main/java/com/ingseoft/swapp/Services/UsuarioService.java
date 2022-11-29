@@ -2,6 +2,9 @@ package com.ingseoft.swapp.Services;
 
 import java.util.Optional;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,16 +42,16 @@ public class UsuarioService {
     // 1. actor ingresa datos del trocador
     // 2. sistema revisa que no existe otro trocador con el mismo correo
     // 3. sistema almacena el trocador
-    public Boolean agregarUsuario (Usuario nuevoUsuario)  {
+    public Usuario agregarUsuario (Usuario nuevoUsuario)  {
 
         // 2. sistema revisa que no existe otro trocador con el mismo correo
         if (this.repositorio.existsByCorreo(nuevoUsuario.getCorreo())) {
-            return false;
+            return null;
         } else {
 
             // 3. sistema almacena el trocador
             this.repositorio.save(nuevoUsuario);
-            return true;
+            return nuevoUsuario;
         }
 
     }
@@ -61,22 +64,22 @@ public class UsuarioService {
     }
 
     // CU00 Login validar clave
-    public boolean validarUsuario(Usuario validarUsuario) {
-    
+    public Usuario validarUsuario(Usuario validarUsuario) {
             // Sistema revisa si existe correo
             if (this.repositorio.existsByCorreo(validarUsuario.getCorreo())) {
                 // Validar Clave
                 Usuario usuario = this.repositorio.findByCorreo(validarUsuario.getCorreo()).get();
                 if(usuario.getContrasena().equals(validarUsuario.getContrasena())){
                     //Contraseña Correcta
-                    return true;
+                    usuario.setContrasena("");
+                    return usuario;
                 }else {
                     //Contraseña Incorrecta
-                    return false;
+                    return null;
                 }
             } else {
                 // Correo no existe
-                return false;
+                return null;
             }
 
 
