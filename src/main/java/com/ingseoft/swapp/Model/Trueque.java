@@ -1,5 +1,6 @@
 package com.ingseoft.swapp.Model;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -52,12 +55,24 @@ public class Trueque {
     @Column(name = "precio_logistica",length = 18)
     private Double precioLogistica;
 
+    @Column(name = "solicitante_id",length = 18)
+    private String solicitanteId;
+
+
+    @Column(name = "solicitado_id",length = 18)
+    private String solicitadoId;
+
+
     //----------------Relaciones -------------------------------------------------------------------
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Usuario.class)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_usuario"), nullable = true)
     private Usuario solicitante;
+
+    // @JsonBackReference
+    // @ManyToMany(mappedBy = "trueques")
+    // private List<Usuario> usuarios;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = ElementoDeseado.class)
     @JoinColumn(name = "elemento_deseado_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_elemento_deseado"), nullable = true)

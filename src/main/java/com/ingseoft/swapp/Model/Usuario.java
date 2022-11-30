@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -74,4 +76,9 @@ public class Usuario {
     @OneToMany(mappedBy = "solicitante")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Trueque> trueques;
+
+    // @ManyToMany
+    // @JoinTable(name = "usuarios_trueque", joinColumns = @JoinColumn(name = "usuario_id"),  inverseJoinColumns = @JoinColumn(name = "trueque_id"))
+    // private List<Trueque> trueques;
+
 }

@@ -2,8 +2,6 @@ package com.ingseoft.swapp.Services;
 
 import java.util.Optional;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

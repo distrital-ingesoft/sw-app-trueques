@@ -35,7 +35,7 @@ public class ElementoTruequeService {
         return this.repositorio.save(nuevoElementoTrueque);
     }
 
-    public Optional<ElementoTrueque> ObtenerElementoTrueque (Integer id){
+    public  Optional<ElementoTrueque> ObtenerElementoTrueque (Integer id){
         return this.repositorio.findById(id);
     }
 

@@ -1,5 +1,7 @@
 package com.ingseoft.swapp.Controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +52,11 @@ public class ElementoTruequeController {
     @GetMapping("/ElementosTrueque/categoriaId")
     public Iterable<ElementoTrueque> leerElementoTruequePorCategoria(@RequestParam Integer categoriaId) {
         return this.servicio.ObtenerElementoTruequePorCategoria(categoriaId);
+    }
+
+    @GetMapping("/ElementosTrueque/Id")
+    public Optional<ElementoTrueque> leerElementoTruequePorid(@RequestParam Integer Id) {
+        return this.servicio.ObtenerElementoTrueque(Id);
     }
 
 }
