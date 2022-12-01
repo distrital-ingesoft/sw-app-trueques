@@ -1,6 +1,5 @@
 package com.ingseoft.swapp.Model;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -81,5 +78,19 @@ public class Trueque {
     @OneToOne(fetch = FetchType.EAGER, targetEntity = ElementoTrueque.class)
     @JoinColumn(name = "elemento_trueque_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_trueques_elemento_trueque"), nullable = true)
     private ElementoTrueque elementoTrueque;
+
+    //----------------Metodos--------------------------------------------
+
+    public double calcularLogistica(String ciudadSolicitante, String ciudadSolicitado){
+
+        //Ciudades iguales 5000
+        //Ciudades Diferentes 10000
+        if(ciudadSolicitante.equals(ciudadSolicitado)){
+            return 5000.0;
+        }else{
+            return 10000.0;
+        }
+
+    }
 
 }

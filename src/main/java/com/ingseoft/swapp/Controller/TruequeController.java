@@ -1,6 +1,5 @@
 package com.ingseoft.swapp.Controller;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,7 +58,7 @@ public class TruequeController {
         return "Trueque Iniciado" + nuevo.getId().toString();
     }
 
-    //http://localhost:8080/TruequeEstado?Id=112&estado=Jon
+    //http://127.0.0.1:8080/TruequeEstado?Id=1&estado=Finalizado
     @PutMapping("/TruequeEstado")
     public String actualizarEstadoTrueque(@RequestParam Integer Id, @RequestParam String estado)  {
         String nuevoEstado  = this.servicio.actualizarEstadoTrueque(Id ,estado);

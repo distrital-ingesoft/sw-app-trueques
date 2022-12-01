@@ -1,6 +1,8 @@
 package com.ingseoft.swapp.Services;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,18 +55,18 @@ public class TruequeService {
             String solicitadoId = elemento.get().getUsuario().getId().toString();
             trueque.setSolicitadoId(solicitadoId);
 
+            //Estado inicial
+            trueque.setEstado("Iniciado");
+
+            //Fecha Inicio
+            Date date = new Date();
+            trueque.setFechaInicio(date);
             
             //Calcular Costo Logistica
-            //Ciudades iguales 5000
-            //Ciudades Diferentes 10000
             String CiudadSolicitante = servicioUsuario.ObtenerUsuario(Integer.parseInt(solicitanteId)).getCiudad();
             String CiudadSolicitado = servicioUsuario.ObtenerUsuario(Integer.parseInt(solicitadoId)).getCiudad();
-
-            if(CiudadSolicitante.equals(CiudadSolicitado)){
-                trueque.setPrecioLogistica(5000.0);
-            }else{
-                trueque.setPrecioLogistica(10000.0);
-            }
+            Double precioLogistica = trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
+            trueque.setPrecioLogistica(precioLogistica);
 
             return this.repositorio.save(trueque);
 

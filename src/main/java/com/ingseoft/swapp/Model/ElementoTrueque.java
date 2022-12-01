@@ -78,7 +78,7 @@ public class ElementoTrueque {
     // @LazyCollection(LazyCollectionOption.FALSE)
     // private List<ElementoDeseado> elementosDeseados;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ElementoDeseado> elementosDeseados = new ArrayList<>();
 
 

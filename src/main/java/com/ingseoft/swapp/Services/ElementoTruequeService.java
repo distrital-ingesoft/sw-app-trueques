@@ -53,4 +53,9 @@ public class ElementoTruequeService {
         
         return elementoTrueque.getDisponible();
     }
+
+    public String eliminarElementoTruequeById(Integer id) {
+        this.repositorio.deleteById(id);
+        return "Elemento Eliminado";
+    }
 }

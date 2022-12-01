@@ -39,7 +39,7 @@ curl  \
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombreCompleto":"Cristian Sanchez", "documentoIdentificacion": 777777, "correo": "crsanchez@correo.com", "celular": 1234567, "estado": true, "direccion":"Teusaquillo"  , "ciudad":"CALI" ,"contrasena":"cristian1" , "rol":{"id":1}}' \
+    --data '{ "nombreCompleto":"Cristian Sanchez", "documentoIdentificacion": 777777, "correo": "crsanchez@correo.com", "celular": 1234567, "estado": true, "direccion":"Teusaquillo"  , "ciudad":"BOGOTA" ,"contrasena":"cristian1" , "rol":{"id":1}}' \
     http://127.0.0.1:8080/nuevoUsuario/      
 
 ## CATEGORIA
@@ -82,7 +82,7 @@ curl  \
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "estado": "Iniciado", "fechaInicio":"27/11/2022", "fechaFinal": "27/11/2022",  "solicitante":{ "id":2 }, "elementoDeseado":{ "id":3 } , "elementoTrueque":{ "id":1 } }' \
+    --data '{ "solicitante":{ "id":2 }, "elementoDeseado":{ "id":3 } , "elementoTrueque":{ "id":1 } }' \
     http://127.0.0.1:8080/nuevoTrueque/   
 
 

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -56,7 +57,6 @@ public class ElementoTruequeController {
     }
 
 
-
     @GetMapping("/ElementosTrueque/categoriaId")
     public Iterable<ElementoTrueque> leerElementoTruequePorCategoria(@RequestParam Integer categoriaId) {
         return this.servicio.ObtenerElementoTruequePorCategoria(categoriaId);
@@ -67,4 +67,9 @@ public class ElementoTruequeController {
         return this.servicio.ObtenerElementoTrueque(Id);
     }
 
+
+    @DeleteMapping("/ElementosTrueque/Id")
+    public String eliminarElementoTruequeById(@RequestParam Integer Id) {
+        return this.servicio.eliminarElementoTruequeById(Id);
+    }
 }
