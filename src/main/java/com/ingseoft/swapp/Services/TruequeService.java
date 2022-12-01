@@ -24,6 +24,10 @@ public class TruequeService {
     @Autowired
     private ElementoTruequeService servicioElementoTrueque;
 
+    // servicio
+    @Autowired
+    private UsuarioService servicioUsuario;
+
 
     public TruequeService(TruequeRepository repositorio) {
         this.repositorio = repositorio;
@@ -41,9 +45,27 @@ public class TruequeService {
 
     public Trueque agregarTrueque(Trueque nuevoTrueque) throws Exception {
             Trueque trueque = this.repositorio.save(nuevoTrueque);
-            trueque.setSolicitanteId(trueque.getSolicitante().getId().toString());
+
+            //Almacenar Id usuario solicitante(Usuario) y solicitado(ElementoTrueque)
+            String solicitanteId = trueque.getSolicitante().getId().toString() ;
+            trueque.setSolicitanteId(solicitanteId);
             Optional<ElementoTrueque> elemento = servicioElementoTrueque.ObtenerElementoTrueque(trueque.getElementoTrueque().getId());
-            trueque.setSolicitadoId(elemento.get().getUsuario().getId().toString());
+            String solicitadoId = elemento.get().getUsuario().getId().toString();
+            trueque.setSolicitadoId(solicitadoId);
+
+            
+            //Calcular Costo Logistica
+            //Ciudades iguales 5000
+            //Ciudades Diferentes 10000
+            String CiudadSolicitante = servicioUsuario.ObtenerUsuario(Integer.parseInt(solicitanteId)).getCiudad();
+            String CiudadSolicitado = servicioUsuario.ObtenerUsuario(Integer.parseInt(solicitadoId)).getCiudad();
+
+            if(CiudadSolicitante.equals(CiudadSolicitado)){
+                trueque.setPrecioLogistica(5000.0);
+            }else{
+                trueque.setPrecioLogistica(10000.0);
+            }
+
             return this.repositorio.save(trueque);
 
     }
@@ -54,9 +76,8 @@ public class TruequeService {
 
 
     public Iterable<Trueque> ObtenerTruequebyUsuario (String id){
-        // Optional<Trueque> truquesSolicitante = this.repositorio.findBySolicitanteId(id);
-        // Optional<Trueque> truquesSolicitados = this.repositorio.findBySolicitadoId(id);
-
+ 
+        //Concatenar truques como solicitado 
         List<Trueque> listaTrueques = new ArrayList<>(this.repositorio.findBySolicitanteId(id));
         listaTrueques.addAll(this.repositorio.findBySolicitadoId(id));
 

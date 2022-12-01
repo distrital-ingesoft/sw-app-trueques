@@ -51,7 +51,7 @@ public class Usuario {
     private Long celular;
 
     @Column(name = "ciudad",length = 100)
-    private String contrasenia;
+    private String ciudad;
 
     @Column(name = "direccion", length = 200)
     private String direccion;
@@ -61,6 +61,8 @@ public class Usuario {
 
     @Column(name = "contrasena")
     private String contrasena;
+
+
 
     //---------------------Relaciones------------------------------------------------
 
