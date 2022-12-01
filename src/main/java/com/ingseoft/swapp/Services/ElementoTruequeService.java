@@ -45,4 +45,11 @@ public class ElementoTruequeService {
         categoria.setId(id);
         return this.repositorio.findByCategoria(categoria);
     }
+
+    public Boolean actualizarEstadoElementoTrueque(Integer id) {
+        ElementoTrueque elementoTrueque =  ObtenerElementoTrueque(id).get();
+        elementoTrueque.setDisponible(!elementoTrueque.getDisponible());
+        this.repositorio.save(elementoTrueque);
+        return elementoTrueque.getDisponible();
+    }
 }
