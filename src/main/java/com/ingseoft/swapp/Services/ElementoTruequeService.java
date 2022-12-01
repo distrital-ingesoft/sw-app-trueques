@@ -50,6 +50,7 @@ public class ElementoTruequeService {
         ElementoTrueque elementoTrueque =  ObtenerElementoTrueque(id).get();
         elementoTrueque.setDisponible(!elementoTrueque.getDisponible());
         this.repositorio.save(elementoTrueque);
+        
         return elementoTrueque.getDisponible();
     }
 }

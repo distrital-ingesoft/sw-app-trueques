@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -57,6 +58,14 @@ public class TruequeController {
         Trueque nuevo = this.servicio.agregarTrueque(nuevoTrueque);
         return "Trueque Iniciado" + nuevo.getId().toString();
     }
+
+    //http://localhost:8080/TruequeEstado?Id=112&estado=Jon
+    @PutMapping("/TruequeEstado")
+    public String actualizarEstadoTrueque(@RequestParam Integer Id, @RequestParam String estado)  {
+        String nuevoEstado  = this.servicio.actualizarEstadoTrueque(Id ,estado);
+        return nuevoEstado;
+    }
+
 
 }
 

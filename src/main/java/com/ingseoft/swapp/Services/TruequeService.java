@@ -84,4 +84,14 @@ public class TruequeService {
         
         return listaTrueques;
     }
+
+
+
+    public String actualizarEstadoTrueque(Integer id, String estado) {
+        Trueque trueque  = this.repositorio.findById(id).get();
+        trueque.setEstado(estado);
+        this.repositorio.save(trueque);
+
+        return trueque.getEstado();
+    }
 }
