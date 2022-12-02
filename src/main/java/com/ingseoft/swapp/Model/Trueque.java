@@ -53,11 +53,11 @@ public class Trueque {
     private Double precioLogistica;
 
     @Column(name = "solicitante_id",length = 18)
-    private String solicitanteId;
+    private Integer solicitanteId;
 
 
     @Column(name = "solicitado_id",length = 18)
-    private String solicitadoId;
+    private Integer solicitadoId;
 
 
     //----------------Relaciones -------------------------------------------------------------------
@@ -81,14 +81,14 @@ public class Trueque {
 
     //----------------Metodos--------------------------------------------
 
-    public double calcularLogistica(String ciudadSolicitante, String ciudadSolicitado){
+    public void calcularLogistica(String ciudadSolicitante, String ciudadSolicitado){
 
         //Ciudades iguales 5000
         //Ciudades Diferentes 10000
         if(ciudadSolicitante.equals(ciudadSolicitado)){
-            return 5000.0;
+            this.precioLogistica = 5000.0;
         }else{
-            return 10000.0;
+            this.precioLogistica = 10000.0;
         }
 
     }

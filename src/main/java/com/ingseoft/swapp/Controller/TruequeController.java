@@ -47,15 +47,16 @@ public class TruequeController {
     }
 
     @GetMapping("/Trueques/id")
-    public Iterable<Trueque> ObtenerTruequeUsuario(@RequestParam String id) {
+    public Iterable<Trueque> ObtenerTruequeUsuario(@RequestParam Integer id) {
         return this.servicio.ObtenerTruequebyUsuario(id);
     }
 
     @PostMapping("/nuevoTrueque")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarTrueque(@RequestBody Trueque nuevoTrueque) throws Exception {
+    public Trueque agregarTrueque(@RequestBody Trueque nuevoTrueque) throws Exception {
         Trueque nuevo = this.servicio.agregarTrueque(nuevoTrueque);
-        return "Trueque Iniciado" + nuevo.getId().toString();
+        //return "Trueque Iniciado" + nuevo.getId().toString();
+        return nuevo;
     }
 
     //http://127.0.0.1:8080/TruequeEstado?Id=1&estado=Finalizado

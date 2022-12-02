@@ -10,8 +10,8 @@ import com.ingseoft.swapp.Model.Trueque;
 
 public interface TruequeRepository extends JpaRepository<Trueque, Integer> {
 
-    List<Trueque> findBySolicitanteId(String id);
+    List<Trueque> findBySolicitanteId(Integer id);
 
-    List<Trueque> findBySolicitadoId(String id);
+    List<Trueque> findBySolicitadoId(Integer id);
     
 }

@@ -1,6 +1,5 @@
 package com.ingseoft.swapp.Services;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,88 +10,95 @@ import org.springframework.stereotype.Component;
 
 import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Model.Trueque;
+import com.ingseoft.swapp.Model.Notificacion;
+import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
 import com.ingseoft.swapp.Repositories.TruequeRepository;
+import com.ingseoft.swapp.Repositories.UsuarioRepository;
 
 
 
 @Component
 public class TruequeService {
 
-    // atributo
+    // Repositorios
     @Autowired
-    private TruequeRepository repositorio;
+    private TruequeRepository repositorioTrueque;
 
-    // servicio
+    // Repositorios
     @Autowired
-    private ElementoTruequeService servicioElementoTrueque;
+    private ElementoTruequeRepository repositorioElementoTrueque;
 
-    // servicio
+  
+    // Repositorios
     @Autowired
-    private UsuarioService servicioUsuario;
+    private UsuarioRepository repositorioUsuario;
 
 
-    public TruequeService(TruequeRepository repositorio) {
-        this.repositorio = repositorio;
+    public TruequeService(TruequeRepository repositorioTrueque) {
+        this.repositorioTrueque = repositorioTrueque;
     }
 
     //------------------------ Casos de uso -----------------------------------------
 
     //CU005 Generar Reporte
     public Iterable<Trueque> obtenerTodosLosTrueques() {
-        return this.repositorio.findAll();
+        return this.repositorioTrueque.findAll();
     }
     
 
       //------------------------ Otros -----------------------------------------
 
     public Trueque agregarTrueque(Trueque nuevoTrueque) throws Exception {
-            Trueque trueque = this.repositorio.save(nuevoTrueque);
+
+            Trueque trueque = nuevoTrueque;
 
             //Almacenar Id usuario solicitante(Usuario) y solicitado(ElementoTrueque)
-            String solicitanteId = trueque.getSolicitante().getId().toString() ;
+            Integer solicitanteId = trueque.getSolicitante().getId() ;
             trueque.setSolicitanteId(solicitanteId);
-            Optional<ElementoTrueque> elemento = servicioElementoTrueque.ObtenerElementoTrueque(trueque.getElementoTrueque().getId());
-            String solicitadoId = elemento.get().getUsuario().getId().toString();
+
+            Optional<ElementoTrueque> elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId());
+            Integer solicitadoId = elemento.get().getUsuario().getId();
             trueque.setSolicitadoId(solicitadoId);
 
             //Estado inicial
             trueque.setEstado("Iniciado");
 
             //Fecha Inicio
-            Date date = new Date();
-            trueque.setFechaInicio(date);
+            trueque.setFechaInicio(new Date());
             
             //Calcular Costo Logistica
-            String CiudadSolicitante = servicioUsuario.ObtenerUsuario(Integer.parseInt(solicitanteId)).getCiudad();
-            String CiudadSolicitado = servicioUsuario.ObtenerUsuario(Integer.parseInt(solicitadoId)).getCiudad();
-            Double precioLogistica = trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
-            trueque.setPrecioLogistica(precioLogistica);
+            String CiudadSolicitante = repositorioUsuario.findById(solicitanteId).get().getCiudad();
+            String CiudadSolicitado = repositorioUsuario.findById(solicitadoId).get().getCiudad();
 
-            return this.repositorio.save(trueque);
+            trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
+
+
+        //    Notificacion notificacion = new Notificacion();
+        //    notificacion.enviarCorreo("nicolasrd1808@gmail.com", "test", "test mensaje");
+
+            return this.repositorioTrueque.save(trueque);
 
     }
 
     public Optional<Trueque> ObtenerTrueque (Integer id){
-        return this.repositorio.findById(id);
+        return this.repositorioTrueque.findById(id);
     }
 
 
-    public Iterable<Trueque> ObtenerTruequebyUsuario (String id){
+    public Iterable<Trueque> ObtenerTruequebyUsuario (Integer id){
  
         //Concatenar truques como solicitado 
-        List<Trueque> listaTrueques = new ArrayList<>(this.repositorio.findBySolicitanteId(id));
-        listaTrueques.addAll(this.repositorio.findBySolicitadoId(id));
-
-        
+        List<Trueque> listaTrueques = new ArrayList<>(this.repositorioTrueque.findBySolicitanteId(id));
+        listaTrueques.addAll(this.repositorioTrueque.findBySolicitadoId(id));
         return listaTrueques;
     }
 
 
 
     public String actualizarEstadoTrueque(Integer id, String estado) {
-        Trueque trueque  = this.repositorio.findById(id).get();
+        Trueque trueque  = this.repositorioTrueque.findById(id).get();
         trueque.setEstado(estado);
-        this.repositorio.save(trueque);
+        this.repositorioTrueque.save(trueque);
 
         return trueque.getEstado();
     }
