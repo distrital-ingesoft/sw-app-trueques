@@ -33,6 +33,8 @@ public class TruequeService {
     @Autowired
     private UsuarioRepository repositorioUsuario;
 
+    @Autowired
+    private Notificacion notificacion;
 
     public TruequeService(TruequeRepository repositorioTrueque) {
         this.repositorioTrueque = repositorioTrueque;
@@ -72,9 +74,7 @@ public class TruequeService {
 
             trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
 
-
-        //    Notificacion notificacion = new Notificacion();
-        //    notificacion.enviarCorreo("nicolasrd1808@gmail.com", "test", "test mensaje");
+            this.notificacion.enviarCorreo("nicolasrd1808@gmail.com", "test", "test mensaje");
 
             return this.repositorioTrueque.save(trueque);
 

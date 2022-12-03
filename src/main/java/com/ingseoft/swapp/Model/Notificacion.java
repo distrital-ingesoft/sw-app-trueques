@@ -3,6 +3,7 @@ package com.ingseoft.swapp.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@Component
 public class Notificacion {
 
     @Autowired
