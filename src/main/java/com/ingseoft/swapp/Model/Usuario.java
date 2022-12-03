@@ -17,6 +17,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,6 +34,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +64,7 @@ public class Usuario {
     @Column(name = "estado")
     private Boolean estado;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "contrasena")
     private String contrasena;
 
@@ -69,10 +77,12 @@ public class Usuario {
     private Rol rol;
 
     //@lazy--> no deja tener en ambas Fetch
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "usuario")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ElementoTrueque> elementosTrueque;
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "solicitante")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Trueque> trueques;

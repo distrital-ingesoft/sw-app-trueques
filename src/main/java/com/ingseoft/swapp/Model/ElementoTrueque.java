@@ -20,8 +20,8 @@ import javax.persistence.Table;
 // import org.hibernate.annotations.LazyCollection;
 // import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -38,6 +38,9 @@ import javax.persistence.ForeignKey;
 @Getter
 @Setter
 @EqualsAndHashCode
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class ElementoTrueque {
 
     @Id
@@ -63,7 +66,6 @@ public class ElementoTrueque {
     @Column(name = "estado_elemento",length = 100)
     private String estadoElemento;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Usuario.class)
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_trueque_usuarios"), nullable = true)
     private Usuario usuario;
