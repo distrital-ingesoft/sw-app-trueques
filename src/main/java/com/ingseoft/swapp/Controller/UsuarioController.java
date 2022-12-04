@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ import com.ingseoft.swapp.Services.UsuarioService;
 //  GET /trocadores/{id}    - retorna un trocador
 //  PUT /trocadores/{id}    - modifica un trocador
 //  DELE /trocadores/{id}   - borrar un trocador
-
+@CrossOrigin("*")
 @RestController
 public class UsuarioController {
 
