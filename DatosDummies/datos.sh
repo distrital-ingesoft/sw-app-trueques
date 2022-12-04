@@ -15,6 +15,12 @@ curl  \
     http://127.0.0.1:8080/nuevoPermiso/      
 
 ## ROL
+curl  \
+    --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"nombre":"trocador", "descripcion": "Hace trueques", "activo": true, "permisos":[{"id":2 }]}' \
+    http://127.0.0.1:8080/nuevoRol/     
+
 
 curl  \
     --header "Content-Type: application/json" \
@@ -22,24 +28,19 @@ curl  \
     --data '{"nombre":"Admin", "descripcion": "Hace todo", "activo": true, "permisos":[{"id":1 }]}' \
     http://127.0.0.1:8080/nuevoRol/   
 
-curl  \
-    --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"nombre":"trocador", "descripcion": "Hace trueques", "activo": true, "permisos":[{"id":2 }]}' \
-    http://127.0.0.1:8080/nuevoRol/      
 
 ## USUARIO
 
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombreCompleto":"Nicolas Rodriguez Daza", "documentoIdentificacion": 666666666, "correo": "nrodrguez@correo.com", "celular": 3004188473, "estado": true, "direccion":"Suba"  ,"ciudad":"BOGOTA" , "contrasena":"daza1" , "rol":{"id":1}}' \
+    --data '{ "nombreCompleto":"Nicolas Rodriguez Daza", "documentoIdentificacion": 666666666, "correo": "nicolasrd1808@gmail.com", "celular": 3004188473,  "direccion":"Suba"  ,"ciudad":"BOGOTA" , "contrasena":"daza1" }' \
     http://127.0.0.1:8080/nuevoUsuario/   
 
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombreCompleto":"Cristian Sanchez", "documentoIdentificacion": 777777, "correo": "crsanchez@correo.com", "celular": 1234567, "estado": true, "direccion":"Teusaquillo"  , "ciudad":"BOGOTA" ,"contrasena":"cristian1" , "rol":{"id":1}}' \
+    --data '{ "nombreCompleto":"Cristian Sanchez", "documentoIdentificacion": 777777, "correo": "nrodriguezd@correo.udistrital.edu.co", "celular": 1234567, "direccion":"Teusaquillo"  , "ciudad":"BOGOTA" ,"contrasena":"cristian1" }' \
     http://127.0.0.1:8080/nuevoUsuario/      
 
 ## CATEGORIA

@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ingseoft.swapp.Model.Rol;
 import com.ingseoft.swapp.Model.Usuario;
+import com.ingseoft.swapp.Repositories.RolRepository;
 import com.ingseoft.swapp.Repositories.UsuarioRepository;
 
 // servicio independiente de la tecnología de invocación
@@ -27,6 +29,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repositorio;
 
+    // atributo
+    @Autowired
+    private RolRepository rolRepository;
     // constructor -- recibe este parámetro
     // Spring al momento de crear este componentes, va a crear las dependencias
     // a inyectar las dependencias
@@ -48,6 +53,10 @@ public class UsuarioService {
         } else {
 
             // 3. sistema almacena el trocador
+            Usuario usuario = nuevoUsuario;
+            Rol rol = rolRepository.findById(1).get();
+            usuario.setEstado(true);
+            usuario.setRol(rol);
             this.repositorio.save(nuevoUsuario);
             return nuevoUsuario;
         }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ingseoft.swapp.Model.ElementoTrueque;
 import com.ingseoft.swapp.Model.Trueque;
+import com.ingseoft.swapp.Model.Usuario;
 import com.ingseoft.swapp.Model.Notificacion;
 import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
 import com.ingseoft.swapp.Repositories.TruequeRepository;
@@ -58,23 +59,33 @@ public class TruequeService {
             Integer solicitanteId = trueque.getSolicitante().getId() ;
             trueque.setSolicitanteId(solicitanteId);
 
-            Optional<ElementoTrueque> elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId());
-            Integer solicitadoId = elemento.get().getUsuario().getId();
+            ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
+            Integer solicitadoId = elemento.getUsuario().getId();
             trueque.setSolicitadoId(solicitadoId);
 
             //Estado inicial
-            trueque.setEstado("Iniciado");
+            trueque.setEstado("INICIADO");
 
             //Fecha Inicio
             trueque.setFechaInicio(new Date());
             
             //Calcular Costo Logistica
-            String CiudadSolicitante = repositorioUsuario.findById(solicitanteId).get().getCiudad();
-            String CiudadSolicitado = repositorioUsuario.findById(solicitadoId).get().getCiudad();
+            Usuario usuarioSolicitante = repositorioUsuario.findById(solicitanteId).get();
+            Usuario usuarioSolicitado = repositorioUsuario.findById(solicitadoId).get();
+
+            String CiudadSolicitante = usuarioSolicitante.getCiudad();
+            String CiudadSolicitado = usuarioSolicitado.getCiudad();
 
             trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
 
-            this.notificacion.enviarCorreo("nicolasrd1808@gmail.com", "test", "test mensaje");
+            //Envio de correo
+
+            this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
+            this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
+
+            //Actualizacion disponibilidad elemento trueque a false
+            elemento.setDisponible(false);
+            repositorioElementoTrueque.save(elemento);
 
             return this.repositorioTrueque.save(trueque);
 
@@ -98,6 +109,32 @@ public class TruequeService {
     public String actualizarEstadoTrueque(Integer id, String estado) {
         Trueque trueque  = this.repositorioTrueque.findById(id).get();
         trueque.setEstado(estado);
+
+        ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
+        Usuario usuarioSolicitante = repositorioUsuario.findById(trueque.getSolicitanteId()).get();
+        Usuario usuarioSolicitado = repositorioUsuario.findById(trueque.getSolicitadoId()).get();
+
+        if(estado.equals("ACEPTADO")){
+
+
+        }else if(estado.equals("RECHAZADO")){
+            //Actualizacion disponibilidad elemento trueque a true
+            elemento.setDisponible(true);
+            repositorioElementoTrueque.save(elemento);
+
+
+        }else if(estado.equals("CANCELADO")){
+
+            //Actualizacion disponibilidad elemento trueque a true
+            elemento.setDisponible(true);
+            repositorioElementoTrueque.save(elemento);
+
+        }else if(estado.equals("FINALIZADO"))
+
+        //Envio de correo
+        this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque " + estado + " por " + elemento.getNombre());
+        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque " + estado + " por " + elemento.getNombre());
+
         this.repositorioTrueque.save(trueque);
 
         return trueque.getEstado();
