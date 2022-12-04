@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,19 +59,19 @@ public class ElementoTruequeController {
     }
 
 
-    @GetMapping("/ElementosTrueque/categoriaId")
-    public Iterable<ElementoTrueque> leerElementoTruequePorCategoria(@RequestParam Integer categoriaId) {
+    @GetMapping("/ElementosTrueque/categoria/{categoriaId}")
+    public Iterable<ElementoTrueque> leerElementoTruequePorCategoria(@PathVariable Integer categoriaId) {
         return this.servicio.ObtenerElementoTruequePorCategoria(categoriaId);
     }
 
-    @GetMapping("/ElementosTrueque/Id")
-    public Optional<ElementoTrueque> leerElementoTruequePorid(@RequestParam Integer Id) {
+    @GetMapping("/ElementosTrueque/{Id}")
+    public Optional<ElementoTrueque> leerElementoTruequePorid(@PathVariable Integer Id) {
         return this.servicio.ObtenerElementoTrueque(Id);
     }
 
 
-    @DeleteMapping("/ElementosTrueque/Id")
-    public String eliminarElementoTruequeById(@RequestParam Integer Id) {
+    @DeleteMapping("/ElementosTrueque/{Id}")
+    public String eliminarElementoTruequeById(@PathVariable Integer Id) {
         return this.servicio.eliminarElementoTruequeById(Id);
     }
 }
