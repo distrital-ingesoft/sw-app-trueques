@@ -56,7 +56,7 @@ public class TruequeController {
     @PostMapping("/nuevoTrueque")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Trueque agregarTrueque(@RequestBody Trueque nuevoTrueque) throws Exception {
-        Trueque nuevo = this.servicio.agregarTrueque(nuevoTrueque);
+        Trueque nuevo = this.servicio.solicitarTrueque(nuevoTrueque);
         //return "Trueque Iniciado" + nuevo.getId().toString();
         return nuevo;
     }

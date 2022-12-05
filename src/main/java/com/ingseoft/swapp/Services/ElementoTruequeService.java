@@ -30,9 +30,11 @@ public class ElementoTruequeService {
         return this.repositorio.findAll();
     }
     
-
+    // Registrar nuevo Elemento
     public ElementoTrueque agregarElementoTrueque (ElementoTrueque nuevoElementoTrueque){
-        return this.repositorio.save(nuevoElementoTrueque);
+        ElementoTrueque elemento = nuevoElementoTrueque;
+        elemento.setDisponible(true);
+        return this.repositorio.save(elemento);
     }
 
     public  Optional<ElementoTrueque> ObtenerElementoTrueque (Integer id){
@@ -54,6 +56,7 @@ public class ElementoTruequeService {
         return elementoTrueque.getDisponible();
     }
 
+    // Eliminar Elemento
     public String eliminarElementoTruequeById(Integer id) {
         this.repositorio.deleteById(id);
         return "Elemento Eliminado";

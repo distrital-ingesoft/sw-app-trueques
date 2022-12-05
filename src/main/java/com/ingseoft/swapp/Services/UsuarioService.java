@@ -45,7 +45,7 @@ public class UsuarioService {
     // 1. actor ingresa datos del trocador
     // 2. sistema revisa que no existe otro trocador con el mismo correo
     // 3. sistema almacena el trocador
-    public Usuario agregarUsuario (Usuario nuevoUsuario)  {
+    public Usuario registrarUsuario (Usuario nuevoUsuario)  {
 
         // 2. sistema revisa que no existe otro trocador con el mismo correo
         if (this.repositorio.existsByCorreo(nuevoUsuario.getCorreo())) {
@@ -64,14 +64,14 @@ public class UsuarioService {
     }
 
     // CU000 Traer elementos trueque por usuario
-    public Usuario ObtenerUsuario (Integer id){
+    public Usuario obtenerUsuario (Integer id){
         Optional<Usuario> usuario = this.repositorio.findById(id);
         Usuario usr = usuario.get();
         return usr;
     }
 
-    // CU00 Login validar clave
-    public Usuario validarUsuario(Usuario validarUsuario) {
+    // Iniciar Sesion
+    public Usuario iniciarSesion(Usuario validarUsuario) {
             // Sistema revisa si existe correo
             if (this.repositorio.existsByCorreo(validarUsuario.getCorreo())) {
                 // Validar Clave

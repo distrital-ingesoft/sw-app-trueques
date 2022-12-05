@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,7 +55,7 @@ public class UsuarioController {
 
     @PostMapping("/Log")
     public Usuario  ValidarContrasena(@RequestBody Usuario validarUsuario){
-         Usuario usuario = this.servicio.validarUsuario(validarUsuario);
+         Usuario usuario = this.servicio.iniciarSesion(validarUsuario);
          return usuario;
 
     }
@@ -65,13 +64,13 @@ public class UsuarioController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Usuario agregarUsuario(@RequestBody Usuario nuevoUsuario) {
         //Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
-        Usuario creado = this.servicio.agregarUsuario(nuevoUsuario);
+        Usuario creado = this.servicio.registrarUsuario(nuevoUsuario);
         return creado;
     }
 
     @GetMapping("/ElementosUsuarios/{id}")
     public List<ElementoTrueque> leerTodosLosElementosUsuario(@PathVariable Integer id) {
-        Usuario usuario = this.servicio.ObtenerUsuario(id);
+        Usuario usuario = this.servicio.obtenerUsuario(id);
         return usuario.getElementosTrueque();
     }
 }

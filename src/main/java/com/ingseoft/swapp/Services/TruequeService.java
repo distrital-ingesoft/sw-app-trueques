@@ -51,7 +51,7 @@ public class TruequeService {
 
       //------------------------ Otros -----------------------------------------
 
-    public Trueque agregarTrueque(Trueque nuevoTrueque) throws Exception {
+    public Trueque solicitarTrueque(Trueque nuevoTrueque) throws Exception {
 
             Trueque trueque = nuevoTrueque;
 
@@ -78,16 +78,19 @@ public class TruequeService {
 
             trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
 
-            //Envio de correo
-
-            this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
-            this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
-
             //Actualizacion disponibilidad elemento trueque a false
             elemento.setDisponible(false);
             repositorioElementoTrueque.save(elemento);
 
-            return this.repositorioTrueque.save(trueque);
+            //Guardar trueque
+            trueque = this.repositorioTrueque.save(trueque);
+
+            
+            //Envio de correo
+            this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
+            this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
+
+            return trueque;
 
     }
 
@@ -109,6 +112,7 @@ public class TruequeService {
     public String actualizarEstadoTrueque(Integer id, String estado) {
         Trueque trueque  = this.repositorioTrueque.findById(id).get();
         trueque.setEstado(estado);
+        trueque.setFechaFinal(new Date());
 
         ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
         Usuario usuarioSolicitante = repositorioUsuario.findById(trueque.getSolicitanteId()).get();
