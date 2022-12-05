@@ -61,14 +61,40 @@ public class TruequeController {
         return nuevo;
     }
 
-    //http://127.0.0.1:8080/TruequeEstado/1?estado=Finalizado
-    @PutMapping("/TruequeEstado/{Id}")
-    public String actualizarEstadoTrueque(@PathVariable Integer Id, @RequestParam String estado)  {
-        String nuevoEstado  = this.servicio.actualizarEstadoTrueque(Id ,estado);
+    // //http://127.0.0.1:8080/TruequeEstado/1?estado=Finalizado
+    // @PutMapping("/TruequeEstado/{Id}")
+    // public String actualizarEstadoTrueque(@PathVariable Integer Id, @RequestParam String estado)  {
+    //     String nuevoEstado  = this.servicio.actualizarEstadoTrueque(Id ,estado);
+    //     return nuevoEstado;
+    // }
+
+    //http://127.0.0.1:8080/Trueque/Aceptar/1
+    @PutMapping("/Trueque/Aceptar/{Id}")
+    public String aceptarTrueque(@PathVariable Integer Id)  {
+        String nuevoEstado  = this.servicio.aceptarTrueque(Id);
         return nuevoEstado;
     }
 
+    //http://127.0.0.1:8080/Trueque/Rechazar/1
+    @PutMapping("/Trueque/Rechazar/{Id}")
+    public String rechazarTrueque(@PathVariable Integer Id)  {
+        String nuevoEstado  = this.servicio.rechazarTrueque(Id);
+        return nuevoEstado;
+    }
 
+    //http://127.0.0.1:8080/Trueque/Cancelar/1
+    @PutMapping("/Trueque/Cancelar/{Id}")
+    public String cancelarTrueque(@PathVariable Integer Id)  {
+        String nuevoEstado  = this.servicio.cancelarTrueque(Id);
+        return nuevoEstado;
+    }
+
+    //http://127.0.0.1:8080/Trueque/Finalizar/1
+    @PutMapping("/Trueque/Finalizar/{Id}")
+    public String finalizarTrueque(@PathVariable Integer Id)  {
+        String nuevoEstado  = this.servicio.finalizarTrueque(Id);
+        return nuevoEstado;
+    }
 }
 
 

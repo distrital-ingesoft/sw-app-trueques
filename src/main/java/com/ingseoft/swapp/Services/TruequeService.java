@@ -109,38 +109,125 @@ public class TruequeService {
 
 
 
-    public String actualizarEstadoTrueque(Integer id, String estado) {
-        Trueque trueque  = this.repositorioTrueque.findById(id).get();
-        trueque.setEstado(estado);
-        trueque.setFechaFinal(new Date());
+    // public String actualizarEstadoTrueque(Integer id, String estado) {
+    //     Trueque trueque  = this.repositorioTrueque.findById(id).get();
+    //     trueque.setEstado(estado);
+    //     trueque.setFechaFinal(new Date());
 
+    //     ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
+    //     Usuario usuarioSolicitante = repositorioUsuario.findById(trueque.getSolicitanteId()).get();
+    //     Usuario usuarioSolicitado = repositorioUsuario.findById(trueque.getSolicitadoId()).get();
+
+    //     if(estado.equals("ACEPTADO")){
+
+
+    //     }else if(estado.equals("RECHAZADO")){
+    //         //Actualizacion disponibilidad elemento trueque a true
+    //         elemento.setDisponible(true);
+    //         repositorioElementoTrueque.save(elemento);
+
+
+    //     }else if(estado.equals("CANCELADO")){
+
+    //         //Actualizacion disponibilidad elemento trueque a true
+    //         elemento.setDisponible(true);
+    //         repositorioElementoTrueque.save(elemento);
+
+    //     }else if(estado.equals("FINALIZADO"))
+
+    //     //Envio de correo
+    //     this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque " + estado + " por " + elemento.getNombre());
+    //     this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque " + estado + " por " + elemento.getNombre());
+
+    //     this.repositorioTrueque.save(trueque);
+
+    //     return trueque.getEstado();
+    // }
+
+    //Aceptar Trueque
+    public String aceptarTrueque(Integer id) {
+        Trueque trueque  = this.repositorioTrueque.findById(id).get();
+        trueque.setEstado("ACEPTADO");
+        
+        //Consultar usuarios involucrados
         ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
         Usuario usuarioSolicitante = repositorioUsuario.findById(trueque.getSolicitanteId()).get();
         Usuario usuarioSolicitado = repositorioUsuario.findById(trueque.getSolicitadoId()).get();
 
-        if(estado.equals("ACEPTADO")){
-
-
-        }else if(estado.equals("RECHAZADO")){
-            //Actualizacion disponibilidad elemento trueque a true
-            elemento.setDisponible(true);
-            repositorioElementoTrueque.save(elemento);
-
-
-        }else if(estado.equals("CANCELADO")){
-
-            //Actualizacion disponibilidad elemento trueque a true
-            elemento.setDisponible(true);
-            repositorioElementoTrueque.save(elemento);
-
-        }else if(estado.equals("FINALIZADO"))
-
         //Envio de correo
-        this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque " + estado + " por " + elemento.getNombre());
-        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque " + estado + " por " + elemento.getNombre());
+        this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque ACEPTADO por " + elemento.getNombre());
+        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque ACEPTADO por " + elemento.getNombre());
 
         this.repositorioTrueque.save(trueque);
 
         return trueque.getEstado();
     }
+
+    //Rechazar Trueque
+    public String rechazarTrueque(Integer id) {
+        Trueque trueque  = this.repositorioTrueque.findById(id).get();
+        trueque.setEstado("RECHAZADO");
+        
+        //Consultar usuarios involucrados
+        ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
+        Usuario usuarioSolicitante = repositorioUsuario.findById(trueque.getSolicitanteId()).get();
+        Usuario usuarioSolicitado = repositorioUsuario.findById(trueque.getSolicitadoId()).get();
+
+        //Actualizacion disponibilidad elemento trueque a true
+        elemento.setDisponible(true);
+        repositorioElementoTrueque.save(elemento);      
+
+        //Envio de correo
+        this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque RECHAZADO por " + elemento.getNombre());
+        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque RECHAZADO por " + elemento.getNombre());
+
+        this.repositorioTrueque.save(trueque);
+
+        return trueque.getEstado();
+    }
+
+ 
+    //Cancelar Trueque
+    public String cancelarTrueque(Integer id) {
+        Trueque trueque  = this.repositorioTrueque.findById(id).get();
+        trueque.setEstado("CANCELADO");
+        
+        //Consultar usuarios involucrados
+        ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
+        Usuario usuarioSolicitante = repositorioUsuario.findById(trueque.getSolicitanteId()).get();
+        Usuario usuarioSolicitado = repositorioUsuario.findById(trueque.getSolicitadoId()).get();
+
+        //Actualizacion disponibilidad elemento trueque a true
+        elemento.setDisponible(true);
+        repositorioElementoTrueque.save(elemento);              
+
+        //Envio de correo
+        this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque CANCELADO por " + elemento.getNombre());
+        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque CANCELADO por " + elemento.getNombre());
+
+        this.repositorioTrueque.save(trueque);
+
+        return trueque.getEstado();
+    }
+
+    //Finalizar Trueque
+    public String finalizarTrueque(Integer id) {
+        Trueque trueque  = this.repositorioTrueque.findById(id).get();
+        trueque.setEstado("FINALIZADO");
+        
+        //Consultar usuarios involucrados
+        ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
+        Usuario usuarioSolicitante = repositorioUsuario.findById(trueque.getSolicitanteId()).get();
+        Usuario usuarioSolicitado = repositorioUsuario.findById(trueque.getSolicitadoId()).get();
+
+        //Envio de correo
+        this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque FINALIZADO por " + elemento.getNombre());
+        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque FINALIZADO por " + elemento.getNombre());
+
+        this.repositorioTrueque.save(trueque);
+
+        return trueque.getEstado();
+    }
+
+
 }
