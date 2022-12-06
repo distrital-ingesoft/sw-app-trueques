@@ -31,7 +31,7 @@ public class ElementoTruequeService {
     }
     
     // Registrar nuevo Elemento
-    public ElementoTrueque agregarElementoTrueque (ElementoTrueque nuevoElementoTrueque){
+    public ElementoTrueque registrarElementoTrueque (ElementoTrueque nuevoElementoTrueque){
         ElementoTrueque elemento = nuevoElementoTrueque;
         elemento.setDisponible(true);
         return this.repositorio.save(elemento);

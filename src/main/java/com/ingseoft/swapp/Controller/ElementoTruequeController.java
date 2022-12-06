@@ -47,9 +47,9 @@ public class ElementoTruequeController {
 
     @PostMapping("/nuevoElementoTrueque")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public String agregarElementoTrueque(@RequestBody ElementoTrueque nuevoElementoTrueque) throws Exception {
-        ElementoTrueque nuevo = this.servicio.agregarElementoTrueque(nuevoElementoTrueque);
-        return nuevo.getNombre();
+    public ElementoTrueque agregarElementoTrueque(@RequestBody ElementoTrueque nuevoElementoTrueque) throws Exception {
+        ElementoTrueque nuevo = this.servicio.registrarElementoTrueque(nuevoElementoTrueque);
+        return nuevo;
     }
 
     @PutMapping("/ElementoTruequeEstado/Id")
