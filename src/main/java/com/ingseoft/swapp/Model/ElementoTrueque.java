@@ -20,8 +20,6 @@ import javax.persistence.Table;
 // import org.hibernate.annotations.LazyCollection;
 // import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -38,9 +36,9 @@ import javax.persistence.ForeignKey;
 @Getter
 @Setter
 @EqualsAndHashCode
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+// @JsonIdentityInfo(
+//   generator = ObjectIdGenerators.PropertyGenerator.class, 
+//   property = "id")
 public class ElementoTrueque {
 
     @Id
