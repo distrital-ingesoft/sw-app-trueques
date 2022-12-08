@@ -255,12 +255,12 @@ public class TruequeService {
         for(Trueque trueque: trueques) {
             row = sheet.createRow(initRow);
             row.createCell(0).setCellValue(trueque.getId());
-            row.createCell(0).setCellValue(trueque.getEstado());
-            row.createCell(0).setCellValue(trueque.getFechaInicio());
-            row.createCell(0).setCellValue(trueque.getFechaFinal());
-            row.createCell(0).setCellValue(trueque.getPrecioLogistica());
-            row.createCell(0).setCellValue(trueque.getSolicitanteId());
-            row.createCell(0).setCellValue(trueque.getSolicitadoId());
+            row.createCell(1).setCellValue(trueque.getEstado());
+            row.createCell(2).setCellValue(trueque.getFechaInicio());
+            row.createCell(3).setCellValue(trueque.getFechaFinal());
+            row.createCell(4).setCellValue(trueque.getPrecioLogistica());
+            row.createCell(5).setCellValue(trueque.getSolicitanteId());
+            row.createCell(6).setCellValue(trueque.getSolicitadoId());
 
             initRow++;
         }
@@ -268,8 +268,8 @@ public class TruequeService {
         try {
             workbook.write(stream);
             workbook.close();
+            return new ByteArrayInputStream(stream.toByteArray());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
