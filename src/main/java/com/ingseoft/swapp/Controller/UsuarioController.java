@@ -54,7 +54,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/Log")
-    public Usuario  ValidarContrasena(@RequestBody Usuario validarUsuario){
+    public Usuario  ValidarContrasena(@RequestBody Usuario validarUsuario) throws Exception {
          Usuario usuario = this.servicio.iniciarSesion(validarUsuario);
          return usuario;
 
@@ -62,7 +62,7 @@ public class UsuarioController {
 
     @PostMapping("/nuevoUsuario")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Usuario agregarUsuario(@RequestBody Usuario nuevoUsuario) {
+    public Usuario agregarUsuario(@RequestBody Usuario nuevoUsuario) throws Exception {
         //Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
         Usuario creado = this.servicio.registrarUsuario(nuevoUsuario);
         return creado;

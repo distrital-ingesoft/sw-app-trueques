@@ -40,16 +40,16 @@ public class UsuarioService {
     }
 
     // ------------Casos de uso------------------------------------------
-    
+
     // CU003 Registrar Usuario
     // 1. actor ingresa datos del trocador
     // 2. sistema revisa que no existe otro trocador con el mismo correo
     // 3. sistema almacena el trocador
-    public Usuario registrarUsuario (Usuario nuevoUsuario)  {
+    public Usuario registrarUsuario (Usuario nuevoUsuario) throws Exception {
 
         // 2. sistema revisa que no existe otro trocador con el mismo correo
         if (this.repositorio.existsByCorreo(nuevoUsuario.getCorreo())) {
-            return null;
+            throw new Exception("Ya existe un usuario registrado con los mismos datos.");
         } else {
 
             // 3. sistema almacena el trocador
@@ -71,7 +71,7 @@ public class UsuarioService {
     }
 
     // Iniciar Sesion
-    public Usuario iniciarSesion(Usuario validarUsuario) {
+    public Usuario iniciarSesion(Usuario validarUsuario) throws Exception {
             // Sistema revisa si existe correo
             if (this.repositorio.existsByCorreo(validarUsuario.getCorreo())) {
                 // Validar Clave
@@ -82,11 +82,11 @@ public class UsuarioService {
                     return usuario;
                 }else {
                     //Contraseña Incorrecta
-                    return null;
+                    throw new Exception("La combinación de correo y la contraseña no coinciden.");
                 }
             } else {
                 // Correo no existe
-                return null;
+                throw new Exception("La combinación de correo y la contraseña no coinciden.");
             }
 
 
