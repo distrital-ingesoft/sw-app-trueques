@@ -54,8 +54,10 @@ public class TruequeController {
     @GetMapping("/TruequesXlsx")
     public ResponseEntity<InputStreamResource> leerTodosLosTruequeXlsx() {
         ByteArrayInputStream stream = this.servicio.exportAllTrueques();
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=trueques.xls");
+
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }
 

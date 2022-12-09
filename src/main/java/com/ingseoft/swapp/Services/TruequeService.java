@@ -3,6 +3,8 @@ package com.ingseoft.swapp.Services;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -238,7 +240,7 @@ public class TruequeService {
     }
 
     public ByteArrayInputStream exportAllTrueques() {
-        String[] columns = {"Id","Estado","Fecha de inicio","Fecha final","Precio de logística","Id de solicitante","Id del solicitado"};
+        String[] columns = {"Id","Estado","Fecha de inicio","Fecha final","Precio de logística"};
 
         Workbook workbook = new HSSFWorkbook();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -250,17 +252,29 @@ public class TruequeService {
             cell.setCellValue(columns[i]);
         }
 
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
         List<Trueque> trueques = this.repositorioTrueque.findAll();
         int initRow = 1;
         for(Trueque trueque: trueques) {
             row = sheet.createRow(initRow);
             row.createCell(0).setCellValue(trueque.getId());
             row.createCell(1).setCellValue(trueque.getEstado());
-            row.createCell(2).setCellValue(trueque.getFechaInicio());
-            row.createCell(3).setCellValue(trueque.getFechaFinal());
+
+            if (trueque.getFechaInicio() != null) {
+                row.createCell(2).setCellValue(simpleDateFormat.format(trueque.getFechaInicio()));
+            } else {
+                row.createCell(2).setCellValue("");
+            }
+
+            if (trueque.getFechaFinal() != null) {
+                row.createCell(3).setCellValue(simpleDateFormat.format(trueque.getFechaFinal()));
+            } else {
+                row.createCell(3).setCellValue("");
+            }
+
             row.createCell(4).setCellValue(trueque.getPrecioLogistica());
-            row.createCell(5).setCellValue(trueque.getSolicitanteId());
-            row.createCell(6).setCellValue(trueque.getSolicitadoId());
 
             initRow++;
         }
