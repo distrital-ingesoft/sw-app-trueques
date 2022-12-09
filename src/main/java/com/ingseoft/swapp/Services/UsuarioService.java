@@ -78,7 +78,6 @@ public class UsuarioService {
                 Usuario usuario = this.repositorio.findByCorreo(validarUsuario.getCorreo()).get();
                 if(usuario.getContrasena().equals(validarUsuario.getContrasena())){
                     //Contraseña Correcta
-                    usuario.setContrasena("");
                     return usuario;
                 }else {
                     //Contraseña Incorrecta
