@@ -62,43 +62,59 @@ public class TruequeService {
       //------------------------ Otros -----------------------------------------
 
     public Trueque solicitarTrueque(Trueque nuevoTrueque) throws Exception {
+            // Traer le usuario
+            Optional<Usuario> usuarioSolicitante =  this.repositorioUsuario.findById(nuevoTrueque.getSolicitanteId());
+
+            if(usuarioSolicitante.isEmpty()) {
+                throw new Exception("No existe usuario solicitante.");
+            }
 
             Trueque trueque = nuevoTrueque;
 
-            //Almacenar Id usuario solicitante(Usuario) y solicitado(ElementoTrueque)
-            Integer solicitanteId = trueque.getSolicitante().getId() ;
-            trueque.setSolicitanteId(solicitanteId);
+            trueque.setSolicitante(usuarioSolicitante.get());
 
-            ElementoTrueque elemento = repositorioElementoTrueque.findById(trueque.getElementoTrueque().getId()).get();
-            Integer solicitadoId = elemento.getUsuario().getId();
-            trueque.setSolicitadoId(solicitadoId);
+            int elementoTruequeId = trueque.getElementoTrueque().getId();
+            Optional<ElementoTrueque> elementoTrueque = this.repositorioElementoTrueque.findById(elementoTruequeId);
 
-            //Estado inicial
+            if(elementoTrueque.isEmpty()) {
+                throw new Exception("Elemento solicitado no existe");
+            }
+
+            if(!elementoTrueque.get().getDisponible()) {
+                throw new Exception("Elemento no esta activo o disponible");
+            }
+
+            if(elementoTrueque.get().getUsuario().getId() == trueque.getSolicitanteId()) {
+                throw new Exception("No se puede trocar un elemento de tu propiedad");
+            }
+
+            trueque.setElementoTrueque(elementoTrueque.get());
+
             trueque.setEstado("INICIADO");
 
-            //Fecha Inicio
             trueque.setFechaInicio(new Date());
 
             //Calcular Costo Logistica
-            Usuario usuarioSolicitante = repositorioUsuario.findById(solicitanteId).get();
-            Usuario usuarioSolicitado = repositorioUsuario.findById(solicitadoId).get();
+            // Usuario usuarioSolicitante = trueque.getSolicitante();
+            Usuario usuarioSolicitado = trueque.getElementoTrueque().getUsuario();
 
-            String CiudadSolicitante = usuarioSolicitante.getCiudad();
+            String CiudadSolicitante = usuarioSolicitante.get().getCiudad();
             String CiudadSolicitado = usuarioSolicitado.getCiudad();
+
+            // trueque.calcularLogistica(trueque.getSolicitante().getCiudad(), trueque.getElementoTrueque().getUsuario().getCiudad());
 
             trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
 
             //Actualizacion disponibilidad elemento trueque a false
-            elemento.setDisponible(false);
-            repositorioElementoTrueque.save(elemento);
+            elementoTrueque.get().setDisponible(false);
+            repositorioElementoTrueque.save(elementoTrueque.get());
 
             //Guardar trueque
             trueque = this.repositorioTrueque.save(trueque);
 
-
             //Envio de correo
-            this.notificacion.enviarCorreo(usuarioSolicitante.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
-            this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elemento.getNombre());
+            this.notificacion.enviarCorreo(usuarioSolicitante.get().getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elementoTrueque.get().getNombre());
+            this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Truque", "Trueque INICIADO por " + elementoTrueque.get().getNombre());
 
             return trueque;
 

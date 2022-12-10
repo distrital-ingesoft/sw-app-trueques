@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -51,6 +52,7 @@ public class Trueque {
     @Column(name = "precio_logistica",length = 18)
     private Double precioLogistica;
 
+    //@Transient()
     @Column(name = "solicitante_id",length = 18)
     private Integer solicitanteId;
 
