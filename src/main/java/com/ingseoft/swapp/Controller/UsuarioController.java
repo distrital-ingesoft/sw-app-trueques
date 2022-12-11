@@ -53,11 +53,10 @@ public class UsuarioController {
 
     }
 
-    @PostMapping("/Log")
+    @PostMapping("/IniciarSesion")
     public Usuario  ValidarContrasena(@RequestBody Usuario validarUsuario) throws Exception {
          Usuario usuario = this.servicio.iniciarSesion(validarUsuario);
          return usuario;
-
     }
 
     @PostMapping("/nuevoUsuario")

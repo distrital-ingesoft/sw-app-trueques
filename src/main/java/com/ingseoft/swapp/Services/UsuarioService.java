@@ -70,24 +70,19 @@ public class UsuarioService {
 
     // Iniciar Sesion
     public Usuario iniciarSesion(Usuario validarUsuario) throws Exception {
-            // Sistema revisa si existe correo
-            if (this.repositorio.existsByCorreo(validarUsuario.getCorreo())) {
-                // Validar Clave
-                Usuario usuario = this.repositorio.findByCorreo(validarUsuario.getCorreo()).get();
-                if(usuario.getContrasena().equals(validarUsuario.getContrasena())){
-                    //Contraseña Correcta
-                    usuario.setContrasena("");
-                    return usuario;
-                }else {
-                    //Contraseña Incorrecta
-                    throw new Exception("La combinación de correo y la contraseña no coinciden.");
-                }
-            } else {
-                // Correo no existe
-                throw new Exception("La combinación de correo y la contraseña no coinciden.");
-            }
+        if (!this.repositorio.existsByCorreo(validarUsuario.getCorreo())) {
+            throw new Exception("La combinación de correo y la contraseña no coinciden.");
+        }
 
+        Usuario usuario = this.repositorio.findByCorreo(validarUsuario.getCorreo()).get();
 
+        if(!usuario.getContrasena().equals(validarUsuario.getContrasena())) {
+            throw new Exception("La combinación de correo y la contraseña no coinciden.");
+        }
+
+        usuario.setContrasena("");
+
+        return usuario;
     }
     //-----------------Otros--------------------------------------------
 

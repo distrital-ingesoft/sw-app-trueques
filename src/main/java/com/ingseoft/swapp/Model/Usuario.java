@@ -33,14 +33,14 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 // @JsonIdentityInfo(
-//   generator = ObjectIdGenerators.PropertyGenerator.class, 
+//   generator = ObjectIdGenerators.PropertyGenerator.class,
 //   property = "id")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    
+
     @Column(name = "nombre_completo", length = 200)
     private String nombreCompleto;
 
@@ -66,8 +66,6 @@ public class Usuario {
     @Column(name = "contrasena")
     private String contrasena;
 
-
-
     //---------------------Relaciones------------------------------------------------
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Rol.class)
@@ -79,7 +77,7 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ElementoTrueque> elementosTrueque;
-    
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "solicitante")
     @LazyCollection(LazyCollectionOption.FALSE)
