@@ -7,7 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.ingseoft.swapp.Model.Categoria;
 import com.ingseoft.swapp.Model.ElementoTrueque;
+import com.ingseoft.swapp.Model.Usuario;
+import com.ingseoft.swapp.Repositories.CategoriaRepository;
 import com.ingseoft.swapp.Repositories.ElementoTruequeRepository;
+import com.ingseoft.swapp.Repositories.UsuarioRepository;
 
 
 
@@ -16,49 +19,73 @@ public class ElementoTruequeService {
 
     // atributo
     @Autowired
-    private ElementoTruequeRepository repositorio;
+    private ElementoTruequeRepository repositorioElementoTrueque;
+
+    @Autowired
+    private UsuarioRepository repositorioUsuario;
+
+    @Autowired
+    private CategoriaRepository repositorioCategoria;
 
 
-    public ElementoTruequeService(ElementoTruequeRepository repositorio) {
-        this.repositorio = repositorio;
+    public ElementoTruequeService(ElementoTruequeRepository repositorioElementoTrueque) {
+        this.repositorioElementoTrueque = repositorioElementoTrueque;
     }
 
     // Casos de uso
 
 
     public Iterable<ElementoTrueque> obtenerTodosLosElementoTrueque() {
-        return this.repositorio.findAll();
+        return this.repositorioElementoTrueque.findAll();
     }
-    
+
     // Registrar nuevo Elemento
-    public ElementoTrueque registrarElementoTrueque (ElementoTrueque nuevoElementoTrueque){
+    public ElementoTrueque registrarElementoTrueque (ElementoTrueque nuevoElementoTrueque) throws Exception {
+        Optional<Usuario> usuarioSolicitante =  this.repositorioUsuario.findById(nuevoElementoTrueque.getUsuario().getId());
+
+        if(usuarioSolicitante.isEmpty()) {
+            throw new Exception("No existe usuario registrado");
+        }
+
+        Optional<Categoria> categoria = this.repositorioCategoria.findById(nuevoElementoTrueque.getCategoria().getId());
+
+        if(categoria.isEmpty()) {
+            throw new Exception("No existe la categoría ingresada");
+        }
+
         ElementoTrueque elemento = nuevoElementoTrueque;
         elemento.setDisponible(true);
-        return this.repositorio.save(elemento);
+        return this.repositorioElementoTrueque.save(elemento);
     }
 
     public  Optional<ElementoTrueque> ObtenerElementoTrueque (Integer id){
-        return this.repositorio.findById(id);
+        return this.repositorioElementoTrueque.findById(id);
     }
 
 
     public Iterable<ElementoTrueque> ObtenerElementoTruequePorCategoria (Integer id){
         Categoria categoria = new Categoria();
         categoria.setId(id);
-        return this.repositorio.findByCategoria(categoria);
+        return this.repositorioElementoTrueque.findByCategoria(categoria);
     }
 
     public Boolean actualizarEstadoElementoTrueque(Integer id) {
         ElementoTrueque elementoTrueque =  ObtenerElementoTrueque(id).get();
         elementoTrueque.setDisponible(!elementoTrueque.getDisponible());
-        this.repositorio.save(elementoTrueque);
-        
+        this.repositorioElementoTrueque.save(elementoTrueque);
+
         return elementoTrueque.getDisponible();
     }
 
     // Eliminar Elemento
-    public String eliminarElementoTruequeById(Integer id) {
-        this.repositorio.deleteById(id);
+    public String eliminarElementoTruequeById(Integer id) throws Exception {
+        Optional<ElementoTrueque> elemento = this.repositorioElementoTrueque.findById(id);
+
+        if(elemento.isEmpty()) {
+            throw new Exception("No existe el elemento registrado");
+        }
+
+        this.repositorioElementoTrueque.deleteById(id);
         return "Elemento Eliminado";
     }
 }

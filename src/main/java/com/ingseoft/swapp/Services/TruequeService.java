@@ -62,11 +62,10 @@ public class TruequeService {
       //------------------------ Otros -----------------------------------------
 
     public Trueque solicitarTrueque(Trueque nuevoTrueque) throws Exception {
-            // Traer le usuario
             Optional<Usuario> usuarioSolicitante =  this.repositorioUsuario.findById(nuevoTrueque.getSolicitanteId());
 
             if(usuarioSolicitante.isEmpty()) {
-                throw new Exception("No existe usuario solicitante.");
+                throw new Exception("No existe usuario solicitante");
             }
 
             Trueque trueque = nuevoTrueque;
@@ -95,13 +94,10 @@ public class TruequeService {
             trueque.setFechaInicio(new Date());
 
             //Calcular Costo Logistica
-            // Usuario usuarioSolicitante = trueque.getSolicitante();
             Usuario usuarioSolicitado = trueque.getElementoTrueque().getUsuario();
 
             String CiudadSolicitante = usuarioSolicitante.get().getCiudad();
             String CiudadSolicitado = usuarioSolicitado.getCiudad();
-
-            // trueque.calcularLogistica(trueque.getSolicitante().getCiudad(), trueque.getElementoTrueque().getUsuario().getCiudad());
 
             trueque.calcularLogistica(CiudadSolicitante, CiudadSolicitado);
 

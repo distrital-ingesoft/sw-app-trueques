@@ -43,8 +43,6 @@ public class ElementoTruequeController {
 
     }
 
-
-
     @PostMapping("/nuevoElementoTrueque")
     @ResponseStatus(code = HttpStatus.CREATED)
     public ElementoTrueque agregarElementoTrueque(@RequestBody ElementoTrueque nuevoElementoTrueque) throws Exception {
@@ -58,7 +56,6 @@ public class ElementoTruequeController {
         return Estado;
     }
 
-
     @GetMapping("/ElementosTrueque/categoria/{categoriaId}")
     public Iterable<ElementoTrueque> leerElementoTruequePorCategoria(@PathVariable Integer categoriaId) {
         return this.servicio.ObtenerElementoTruequePorCategoria(categoriaId);
@@ -69,9 +66,8 @@ public class ElementoTruequeController {
         return this.servicio.ObtenerElementoTrueque(Id);
     }
 
-
     @DeleteMapping("/ElementosTrueque/{Id}")
-    public String eliminarElementoTruequeById(@PathVariable Integer Id) {
+    public String eliminarElementoTruequeById(@PathVariable Integer Id) throws Exception {
         return this.servicio.eliminarElementoTruequeById(Id);
     }
 }

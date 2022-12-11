@@ -52,7 +52,7 @@ public class Trueque {
     @Column(name = "precio_logistica",length = 18)
     private Double precioLogistica;
 
-    //@Transient()
+    // @Transient()
     @Column(name = "solicitante_id",length = 18)
     private Integer solicitanteId;
 
