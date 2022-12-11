@@ -54,7 +54,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/Log")
-    public Usuario  ValidarContrasena(@RequestBody Usuario validarUsuario){
+    public Usuario  iniciarSesion(@RequestBody Usuario validarUsuario){
          Usuario usuario = this.servicio.iniciarSesion(validarUsuario);
          return usuario;
 
