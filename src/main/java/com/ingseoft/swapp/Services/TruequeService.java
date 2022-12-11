@@ -55,7 +55,7 @@ public class TruequeService {
     }
 
     public Trueque solicitarTrueque(Trueque nuevoTrueque) throws Exception {
-        Optional<Usuario> usuarioSolicitante =  this.repositorioUsuario.findById(nuevoTrueque.getSolicitanteId());
+        Optional<Usuario> usuarioSolicitante =  this.repositorioUsuario.findById(nuevoTrueque.getSolicitante().getId());
 
         if(usuarioSolicitante.isEmpty()) {
             throw new Exception("No existe usuario solicitante");
@@ -215,7 +215,7 @@ public class TruequeService {
         trueque.get().setEstado(state);
 
         //Consultar usuarios involucrados
-        Usuario usuarioSolicitado = repositorioUsuario.findById(trueque.get().getSolicitadoId()).get();
+        Usuario usuarioSolicitado = repositorioUsuario.findById(elementoTrueque.get().getUsuario().getId()).get();
 
         Boolean truequeDisponible = state == "RECHAZADO" || state == "CANCELADO";
 

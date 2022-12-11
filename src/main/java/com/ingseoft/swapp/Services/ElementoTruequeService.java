@@ -85,6 +85,12 @@ public class ElementoTruequeService {
             throw new Exception("No existe el elemento registrado");
         }
 
+        Optional<Usuario> usuario = this.repositorioUsuario.findById(elemento.get().getUsuario().getId());
+
+        if(usuario.isEmpty()) {
+            throw new Exception("No existe el usuario registrado");
+        }
+
         this.repositorioElementoTrueque.deleteById(id);
         return "Elemento Eliminado";
     }
