@@ -63,6 +63,24 @@ public class UsuarioService {
 
     }
 
+    public Usuario registrarAdmin (Usuario nuevoUsuario)  {
+
+        // 2. sistema revisa que no existe otro trocador con el mismo correo
+        if (this.repositorio.existsByCorreo(nuevoUsuario.getCorreo())) {
+            return null;
+        } else {
+
+            // 3. sistema almacena el trocador
+            Usuario usuario = nuevoUsuario;
+            Rol rol = rolRepository.findById(2).get();
+            usuario.setEstado(true);
+            usuario.setRol(rol);
+            this.repositorio.save(nuevoUsuario);
+            return nuevoUsuario;
+        }
+
+    }
+
     // CU000 Traer elementos trueque por usuario
     public Usuario obtenerUsuario (Integer id){
         Optional<Usuario> usuario = this.repositorio.findById(id);

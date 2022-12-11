@@ -68,6 +68,14 @@ public class UsuarioController {
         return creado;
     }
 
+    @PostMapping("/nuevoAdmin")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Usuario agregarAdmin(@RequestBody Usuario nuevoUsuario) {
+        //Usuario nuevo = this.servicio.agregarUsuario(nuevoUsuario);
+        Usuario creado = this.servicio.registrarAdmin(nuevoUsuario);
+        return creado;
+    }
+
     @GetMapping("/ElementosUsuarios/{id}")
     public List<ElementoTrueque> leerTodosLosElementosUsuario(@PathVariable Integer id) {
         Usuario usuario = this.servicio.obtenerUsuario(id);

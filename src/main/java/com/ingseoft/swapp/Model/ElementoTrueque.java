@@ -38,9 +38,9 @@ import javax.persistence.ForeignKey;
 @Getter
 @Setter
 @EqualsAndHashCode
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+// @JsonIdentityInfo(
+//   generator = ObjectIdGenerators.PropertyGenerator.class, 
+//   property = "id")
 public class ElementoTrueque {
 
     @Id

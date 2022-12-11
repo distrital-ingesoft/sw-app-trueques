@@ -1,10 +1,22 @@
 package com.ingseoft.swapp.Services;
 
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -230,4 +242,66 @@ public class TruequeService {
     }
 
 
+
+    public ByteArrayInputStream generarReporte() {
+        String[] columns = {"Id","Estado","Fecha de inicio","Fecha final","Precio de logística","Usuario solicitante","Usuario solicitado","Elemento trueuqe","Elemento deseado","Ciudad Origen","Ciudad Destino"};
+
+        Workbook workbook = new HSSFWorkbook();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        Sheet sheet = workbook.createSheet("Trueques");
+        Row row = sheet.createRow(0);
+        for(int i = 0; i < columns.length; i++) {
+            Cell cell = row.createCell(i);
+            cell.setCellValue(columns[i]);
+        }
+
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        List<Trueque> trueques = this.repositorioTrueque.findAll();
+        int initRow = 1;
+        for(Trueque trueque: trueques) {
+            row = sheet.createRow(initRow);
+            row.createCell(0).setCellValue(trueque.getId());
+            row.createCell(1).setCellValue(trueque.getEstado());
+
+            if (trueque.getFechaInicio() != null) {
+                row.createCell(2).setCellValue(simpleDateFormat.format(trueque.getFechaInicio()));
+            } else {
+                row.createCell(2).setCellValue("");
+            }
+
+            if (trueque.getFechaFinal() != null) {
+                row.createCell(3).setCellValue(simpleDateFormat.format(trueque.getFechaFinal()));
+            } else {
+                row.createCell(3).setCellValue("");
+            }
+
+            row.createCell(4).setCellValue(trueque.getPrecioLogistica());
+
+            row.createCell(5).setCellValue(trueque.getElementoTrueque().getUsuario().getNombreCompleto());
+
+            row.createCell(6).setCellValue(repositorioUsuario.findById(trueque.getSolicitanteId()).get().getNombreCompleto());
+
+            row.createCell(7).setCellValue(trueque.getElementoTrueque().getNombre());
+
+            row.createCell(8).setCellValue(trueque.getElementoDeseado().getNombre());
+
+            row.createCell(9).setCellValue(trueque.getElementoTrueque().getUsuario().getCiudad());
+
+            row.createCell(10).setCellValue(repositorioUsuario.findById(trueque.getSolicitanteId()).get().getCiudad());
+
+            initRow++;
+        }
+
+        try {
+            workbook.write(stream);
+            workbook.close();
+            return new ByteArrayInputStream(stream.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.ingseoft.swapp.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -34,9 +35,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+// @JsonIdentityInfo(
+//   generator = ObjectIdGenerators.PropertyGenerator.class, 
+//   property = "id")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,7 +81,7 @@ public class Usuario {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "usuario")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<ElementoTrueque> elementosTrueque;
+    private List<ElementoTrueque> elementosTrueque = new ArrayList<>();
     
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "solicitante")

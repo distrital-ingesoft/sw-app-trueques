@@ -1,8 +1,13 @@
 package com.ingseoft.swapp.Controller;
 
 
+import java.io.ByteArrayInputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -93,6 +98,16 @@ public class TruequeController {
     public String finalizarTrueque(@PathVariable Integer Id)  {
         String nuevoEstado  = this.servicio.finalizarTrueque(Id);
         return nuevoEstado;
+    }
+
+    @GetMapping("/Trueques/reporte")
+    public ResponseEntity<InputStreamResource> leerTodosLosTruequeXlsx() {
+        ByteArrayInputStream stream = this.servicio.generarReporte();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=trueques.xls");
+
+        return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
     }
 }
 

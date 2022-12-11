@@ -31,17 +31,25 @@ curl  \
 
 ## USUARIO
 
+
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombreCompleto":"Nicolas Rodriguez Daza", "documentoIdentificacion": 666666666, "correo": "nicolasrd1808@gmail.com", "celular": 3004188473,  "direccion":"Suba"  ,"ciudad":"BOGOTA" , "contrasena":"daza1" }' \
+    --data '{ "nombreCompleto":"Nicolas Rodriguez Daza", "documentoIdentificacion": 1234536, "correo": "nicolasrd1808@gmail.com", "celular": 3004188473,  "direccion":"Suba"  ,"ciudad":"Bogota" , "contrasena":"daza1" }' \
     http://127.0.0.1:8080/nuevoUsuario/   
 
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombreCompleto":"Cristian Sanchez", "documentoIdentificacion": 777777, "correo": "nrodriguezd@correo.udistrital.edu.co", "celular": 1234567, "direccion":"Teusaquillo"  , "ciudad":"BOGOTA" ,"contrasena":"cristian1" }' \
-    http://127.0.0.1:8080/nuevoUsuario/      
+    --data '{ "nombreCompleto":"Cristian Sanchez", "documentoIdentificacion": 777777, "correo": "nrodriguezd@correo.udistrital.edu.co", "celular": 1234567, "direccion":"Teusaquillo"  , "ciudad":"Bogota" ,"contrasena":"cristian1" }' \
+    http://127.0.0.1:8080/nuevoUsuario/    
+
+    curl  \
+    --header "Content-Type: application/json" \
+    --request POST \
+    --data '{ "nombreCompleto":"Cristian David Sanchez Bolanos", "documentoIdentificacion": 1234567, "correo": "crdsanchezb@correo.udistrital.edu.co", "celular": 3004188473,  "direccion":"Teusaquillo"  ,"ciudad":"Bogota" , "contrasena":"cristian1" }' \
+    http://127.0.0.1:8080/nuevoAdmin/   
+  
 
 ## CATEGORIA
 
@@ -76,6 +84,12 @@ curl  \
     --header "Content-Type: application/json" \
     --request POST \
     --data '{     "nombre":"Celular", "descripcion": "Iphone", "enlaceImagen":"https://tienda.claro.com.co/wcsstore/Claro/images/catalog/equipos/646x1000/70037180.jpg", "precio": 15900, "disponible": true, "estadoElemento":"Nuevo" , "usuario":{ "id":2 }, "categoria":{ "id":3 }, "elementosDeseados":[ { "nombre":"Portatil" }, { "nombre":"Reloj" }, { "nombre":"Televisor" } ]}' \
+    http://127.0.0.1:8080/nuevoElementoTrueque/ 
+
+    curl  \
+    --header "Content-Type: application/json" \
+    --request POST \
+    --data '{     "nombre":"vaca", "descripcion": "vaca", "enlaceImagen":"https://tienda.claro.com.co/wcsstore/Claro/images/catalog/equipos/646x1000/70037180.jpg", "precio": 15900, "disponible": true, "estadoElemento":"Nuevo" , "usuario":{ "id":2 }, "categoria":{ "id":3 }, "elementosDeseados":[ { "nombre":"Portatil" }, { "nombre":"Reloj" }, { "nombre":"Televisor" } ]}' \
     http://127.0.0.1:8080/nuevoElementoTrueque/ 
 
 ##  TRUEQUE
