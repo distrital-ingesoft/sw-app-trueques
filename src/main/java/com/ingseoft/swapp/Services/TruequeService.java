@@ -197,7 +197,7 @@ public class TruequeService {
         Optional<Trueque> trueque  = this.repositorioTrueque.findById(idTrueque);
 
         if(trueque.isEmpty()) {
-            throw new Exception("El trueque a rechazar no existe");
+            throw new Exception("El trueque no existe");
         }
 
         Optional<Usuario> usuarioSolicitante = repositorioUsuario.findById(trueque.get().getSolicitante().getId());
