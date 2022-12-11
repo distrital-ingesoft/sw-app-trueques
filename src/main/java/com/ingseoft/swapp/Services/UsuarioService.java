@@ -46,21 +46,19 @@ public class UsuarioService {
     // 2. sistema revisa que no existe otro trocador con el mismo correo
     // 3. sistema almacena el trocador
     public Usuario registrarUsuario (Usuario nuevoUsuario) throws Exception {
-
-        // 2. sistema revisa que no existe otro trocador con el mismo correo
         if (this.repositorio.existsByCorreo(nuevoUsuario.getCorreo())) {
-            throw new Exception("Ya existe un usuario registrado con los mismos datos.");
-        } else {
-
-            // 3. sistema almacena el trocador
-            Usuario usuario = nuevoUsuario;
-            Rol rol = rolRepository.findById(1).get();
-            usuario.setEstado(true);
-            usuario.setRol(rol);
-            this.repositorio.save(nuevoUsuario);
-            return nuevoUsuario;
+            throw new Exception("Ya existe un usuario registrado con los mismos datos");
         }
 
+        Optional<Rol> rol = this.rolRepository.findById(1);
+
+        if (rol.isEmpty()) {
+            throw new Exception("No existe un rol registrado");
+        }
+
+        this.repositorio.save(nuevoUsuario);
+
+        return nuevoUsuario;
     }
 
     // CU000 Traer elementos trueque por usuario
