@@ -39,13 +39,6 @@ public class TruequeController {
 
     // == Operaciones REST
 
-
-    @GetMapping("/")
-    public String getMessage(){
-        return "Hello World";
-    }
-
-
     @GetMapping("/Trueques")
     public Iterable<Trueque> leerTodosLosTrueque() {
         return this.servicio.obtenerTodosLosTrueques();
@@ -59,11 +52,6 @@ public class TruequeController {
         headers.add("Content-Disposition", "attachment; filename=trueques.xls");
 
         return ResponseEntity.ok().headers(headers).body(new InputStreamResource(stream));
-    }
-
-    @GetMapping("/Trueques/{id}")
-    public Iterable<Trueque> ObtenerTruequeUsuario(@PathVariable Integer id) {
-        return this.servicio.ObtenerTruequebyUsuario(id);
     }
 
     @PostMapping("/nuevoTrueque")

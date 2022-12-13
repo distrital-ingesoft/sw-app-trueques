@@ -37,7 +37,7 @@ import javax.persistence.ForeignKey;
 @Setter
 @EqualsAndHashCode
 // @JsonIdentityInfo(
-//   generator = ObjectIdGenerators.PropertyGenerator.class, 
+//   generator = ObjectIdGenerators.PropertyGenerator.class,
 //   property = "id")
 public class ElementoTrueque {
 
@@ -69,7 +69,7 @@ public class ElementoTrueque {
     private Usuario usuario;
 
 
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Categoria.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Categoria.class)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_elementos_trueque_categorias"), nullable = true)
     private Categoria categoria;
 

@@ -112,35 +112,89 @@ public class TruequeService {
         return this.repositorioTrueque.findById(id);
     }
 
-    public Iterable<Trueque> ObtenerTruequebyUsuario (Integer id){
-        //Concatenar truques como solicitado
-        List<Trueque> listaTrueques = new ArrayList<>(this.repositorioTrueque.findBySolicitanteId(id));
-        listaTrueques.addAll(this.repositorioTrueque.findBySolicitadoId(id));
-        return listaTrueques;
-    }
-
     //Aceptar Trueque
     public String aceptarTrueque(Integer id) throws Exception {
-        Trueque trueque = this.changeTruequeState(id, "ACEPTADO");
-        return trueque.getEstado();
+        Optional<Trueque> trueque  = this.repositorioTrueque.findById(id);
+
+        if(trueque.get().getEstado().equals("INICIADO")) {
+            this.cambiarEstadoTrueque(trueque, "ACEPTADO");
+            return trueque.get().getEstado();
+        } else {
+            throw new Exception("El trueque debe esta en estado INICIADO");
+        }
     }
 
     //Rechazar Trueque
     public String rechazarTrueque(Integer id) throws Exception {
-        Trueque trueque = this.changeTruequeState(id, "RECHAZADO");
-        return trueque.getEstado();
+        Optional<Trueque> trueque  = this.repositorioTrueque.findById(id);
+
+        if(trueque.get().getEstado().equals("INICIADO")) {
+            this.cambiarEstadoTrueque(trueque, "RECHAZADO");
+            return trueque.get().getEstado();
+        } else {
+            throw new Exception("El trueque debe esta en estado INICIADO");
+        }
     }
 
     //Cancelar Trueque
     public String cancelarTrueque(Integer id) throws Exception {
-        Trueque trueque = this.changeTruequeState(id, "CANCELADO");
-        return trueque.getEstado();
+        Optional<Trueque> trueque  = this.repositorioTrueque.findById(id);
+
+        if(trueque.get().getEstado().equals("INICIADO")) {
+            this.cambiarEstadoTrueque(trueque, "CANCELADO");
+            return trueque.get().getEstado();
+        } else {
+            throw new Exception("El trueque debe esta en estado INICIADO");
+        }
     }
 
     //Finalizar Trueque
     public String finalizarTrueque(Integer id) throws Exception {
-        Trueque trueque = this.changeTruequeState(id, "FINALIZADO");
-        return trueque.getEstado();
+        Optional<Trueque> trueque  = this.repositorioTrueque.findById(id);
+
+        if(trueque.get().getEstado().equals("ACEPTADO")) {
+            this.cambiarEstadoTrueque(trueque, "FINALIZADO");
+            return trueque.get().getEstado();
+        } else {
+            throw new Exception("El trueque debe esta en estado ACEPTADO");
+        }
+    }
+
+    private Trueque cambiarEstadoTrueque(Optional<Trueque> trueque, String state) throws Exception {
+        if(trueque.isEmpty()) {
+            throw new Exception("El trueque no existe");
+        }
+
+        Optional<Usuario> usuarioSolicitante = repositorioUsuario.findById(trueque.get().getSolicitante().getId());
+
+        if(usuarioSolicitante.isEmpty()) {
+            throw new Exception("No existe usuario solicitante");
+        }
+
+        Optional<ElementoTrueque> elementoTrueque = repositorioElementoTrueque.findById(trueque.get().getElementoTrueque().getId());
+
+        if(elementoTrueque.isEmpty()) {
+            throw new Exception("El elemento asociado al trueque no existe");
+        }
+
+        trueque.get().setEstado(state);
+
+        //Consultar usuarios involucrados
+        Usuario usuarioSolicitado = repositorioUsuario.findById(elementoTrueque.get().getUsuario().getId()).get();
+
+        Boolean truequeDisponible = state == "RECHAZADO" || state == "CANCELADO";
+
+        //Actualizacion disponibilidad elemento trueque a true
+        elementoTrueque.get().setDisponible(truequeDisponible);
+        this.repositorioElementoTrueque.save(elementoTrueque.get());
+
+        //Envio de correo
+        this.notificacion.enviarCorreo(usuarioSolicitante.get().getCorreo(), "Actualización estado Trueque", "Trueque " + state + "por " + elementoTrueque.get().getNombre());
+        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Trueque", "Trueque " + state + " por " + elementoTrueque.get().getNombre());
+
+        this.repositorioTrueque.save(trueque.get());
+
+        return trueque.get();
     }
 
     public ByteArrayInputStream exportAllTrueques() {
@@ -191,44 +245,5 @@ public class TruequeService {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private Trueque changeTruequeState(int idTrueque, String state) throws Exception {
-        Optional<Trueque> trueque  = this.repositorioTrueque.findById(idTrueque);
-
-        if(trueque.isEmpty()) {
-            throw new Exception("El trueque no existe");
-        }
-
-        Optional<Usuario> usuarioSolicitante = repositorioUsuario.findById(trueque.get().getSolicitante().getId());
-
-        if(usuarioSolicitante.isEmpty()) {
-            throw new Exception("No existe usuario solicitante");
-        }
-
-        Optional<ElementoTrueque> elementoTrueque = repositorioElementoTrueque.findById(trueque.get().getElementoTrueque().getId());
-
-        if(elementoTrueque.isEmpty()) {
-            throw new Exception("El elemento asociado al trueque no existe");
-        }
-
-        trueque.get().setEstado(state);
-
-        //Consultar usuarios involucrados
-        Usuario usuarioSolicitado = repositorioUsuario.findById(elementoTrueque.get().getUsuario().getId()).get();
-
-        Boolean truequeDisponible = state == "RECHAZADO" || state == "CANCELADO";
-
-        //Actualizacion disponibilidad elemento trueque a true
-        elementoTrueque.get().setDisponible(truequeDisponible);
-        this.repositorioElementoTrueque.save(elementoTrueque.get());
-
-        //Envio de correo
-        this.notificacion.enviarCorreo(usuarioSolicitante.get().getCorreo(), "Actualización estado Trueque", "Trueque " + state + "por " + elementoTrueque.get().getNombre());
-        this.notificacion.enviarCorreo(usuarioSolicitado.getCorreo(), "Actualización estado Trueque", "Trueque " + state + " por " + elementoTrueque.get().getNombre());
-
-        this.repositorioTrueque.save(trueque.get());
-
-        return trueque.get();
     }
 }

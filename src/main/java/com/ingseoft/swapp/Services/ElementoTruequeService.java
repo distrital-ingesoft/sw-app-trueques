@@ -41,9 +41,9 @@ public class ElementoTruequeService {
 
     // Registrar nuevo Elemento
     public ElementoTrueque registrarElementoTrueque (ElementoTrueque nuevoElementoTrueque) throws Exception {
-        Optional<Usuario> usuarioSolicitante =  this.repositorioUsuario.findById(nuevoElementoTrueque.getUsuario().getId());
+        Optional<Usuario> usuarioSolicitado =  this.repositorioUsuario.findById(nuevoElementoTrueque.getUsuario().getId());
 
-        if(usuarioSolicitante.isEmpty()) {
+        if(usuarioSolicitado.isEmpty()) {
             throw new Exception("No existe usuario registrado");
         }
 
