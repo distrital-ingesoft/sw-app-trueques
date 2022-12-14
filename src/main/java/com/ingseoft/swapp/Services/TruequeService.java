@@ -198,7 +198,7 @@ public class TruequeService {
     }
 
     public ByteArrayInputStream exportAllTrueques() {
-        String[] columns = {"Id","Estado","Fecha de inicio","Fecha final","Precio de logística"};
+        String[] columns = {"Id","Estado","Fecha de inicio","Fecha final","Precio de logística", "Usuario solicitante", "Correo usuario solicitante", "Usuario solicitado", "Correo usuario solicitado"};
 
         Workbook workbook = new HSSFWorkbook();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -220,19 +220,23 @@ public class TruequeService {
             row.createCell(0).setCellValue(trueque.getId());
             row.createCell(1).setCellValue(trueque.getEstado());
 
-            if (trueque.getFechaInicio() != null) {
-                row.createCell(2).setCellValue(simpleDateFormat.format(trueque.getFechaInicio()));
-            } else {
-                row.createCell(2).setCellValue("");
-            }
+            String fechaInicio = trueque.getFechaInicio() != null ? simpleDateFormat.format(trueque.getFechaInicio()) : "";
+            row.createCell(2).setCellValue(fechaInicio);
 
-            if (trueque.getFechaFinal() != null) {
-                row.createCell(3).setCellValue(simpleDateFormat.format(trueque.getFechaFinal()));
-            } else {
-                row.createCell(3).setCellValue("");
-            }
+            String fechaFinal = trueque.getFechaFinal() != null ? simpleDateFormat.format(trueque.getFechaFinal()) : "";
+            row.createCell(3).setCellValue(fechaFinal);
 
             row.createCell(4).setCellValue(trueque.getPrecioLogistica());
+
+            Usuario usuarioSolicitante = this.repositorioUsuario.findById(trueque.getSolicitante().getId()).get();
+            row.createCell(5).setCellValue(usuarioSolicitante.getNombreCompleto());
+
+            row.createCell(6).setCellValue(usuarioSolicitante.getCorreo());
+
+            Usuario usuarioSolicitado = trueque.getElementoTrueque().getUsuario();
+            row.createCell(7).setCellValue(usuarioSolicitado.getNombreCompleto());
+
+            row.createCell(8).setCellValue(usuarioSolicitado.getCorreo());
 
             initRow++;
         }

@@ -32,7 +32,7 @@ curl  \
 curl  \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{ "nombreCompleto":"Nicolas Rodriguez Daza", "documentoIdentificacion": 666666666, "correo": "nicolasrd1808@gmail.com", "celular": 3004188473,  "direccion":"Suba"  ,"ciudad":"BOGOTA" , "contrasena":"daza1" }' \
+    --data '{ "nombreCompleto":"Nicolas Rodriguez Daza", "documentoIdentificacion": 666666666, "correo": "cunigarrod@gmail.com", "celular": 3004188473,  "direccion":"Suba"  ,"ciudad":"BOGOTA" , "contrasena":"daza1" }' \
     http://127.0.0.1:8080/nuevoUsuario/
 
 curl  \
