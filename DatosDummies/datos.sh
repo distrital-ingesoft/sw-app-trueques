@@ -70,8 +70,11 @@ curl  \
     --request POST \
     --data '{"nombre":"Tecnologia"}' \
     http://127.0.0.1:8080/nuevaCategoria/   
-
-
+curl  \
+    --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"nombre":"Hogar"}' \
+    http://127.0.0.1:8080/nuevaCategoria/   
 ## ELEMENTO TRUEQUE - ELEMENTO DESEADO 
 
 curl  \
